@@ -1,11 +1,9 @@
 main_char = "resources/penguin.png"
-<<<<<<< HEAD
+
 wheel_file= "resources/wheel.png"
 xx = 270
 yy = 80
-=======
 
->>>>>>> 0ee572c4f8240fb74b1e6ba390b5d9f08fe1db99
 import pygame
 from pygame.locals import *
 from sys import exit
@@ -20,12 +18,13 @@ char_x = 100
 char_y = 300
 char_speed = 200
 
-wheel_x=320
-wheel_y=60
+wheel_x=200
+wheel_y=50
 
 character = pygame.image.load(main_char).convert_alpha()
-character=pygame.transform.scale(character,(50,69))
+character=pygame.transform.scale(character,(35,55))
 wheel=pygame.image.load(wheel_file).convert_alpha()
+wheel=pygame.transform.scale(wheel,(480,480))
 while True:
     
     for event in pygame.event.get():
