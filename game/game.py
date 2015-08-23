@@ -1,15 +1,8 @@
-<<<<<<< HEAD
-main_char = "resources/penguin.jpg"
-=======
 main_char = "resources/penguin.png"
-<<<<<<< HEAD
 wheel_file= "resources/wheel.png"
 xx = 270
 yy = 80
-=======
->>>>>>> eef302cd7820e1baa65dcb3d8a8251dc109baadd
 
->>>>>>> 0ee572c4f8240fb74b1e6ba390b5d9f08fe1db99
 import pygame
 from pygame.locals import *
 from sys import exit
@@ -24,17 +17,19 @@ char_x = 100
 char_y = 300
 char_speed = 200
 
-<<<<<<< HEAD
-character = pygame.image.load(main_char).convert_alpha()
-character = pygame.transform.scale(character,(50,69))
-=======
-wheel_x=320
-wheel_y=60
->>>>>>> eef302cd7820e1baa65dcb3d8a8251dc109baadd
+
+
+
+wheel_x=200
+wheel_y=50
+
 
 character = pygame.image.load(main_char).convert_alpha()
-character=pygame.transform.scale(character,(50,69))
-wheel=pygame.image.load(wheel_file).convert_alpha()
+character = pygame.transform.scale(character,(35,55))
+
+wheel = pygame.image.load(wheel_file).convert_alpha()
+wheel = pygame.transform.scale(wheel,(480,480))
+
 while True:
     
     for event in pygame.event.get():
@@ -62,24 +57,24 @@ while True:
     
     # if character goes out of the screen
             
-    if char_x >= 750:
-        char_x = 750
+    if char_x >= 765:
+        char_x = 765
     if char_x <= 0:
         char_x = 0
     if char_y <= 0:
         char_y = 0
-    if char_y >= 531:
-        char_y = 531
-<<<<<<< HEAD
+    if char_y >= 545:
+        char_y = 545
+
     
     # end    
     
     screen.fill((255,255,255))            
-=======
+
         
     screen.fill((255,255,255))
     screen.blit(wheel,(wheel_x,wheel_y))            
->>>>>>> eef302cd7820e1baa65dcb3d8a8251dc109baadd
+
     screen.blit(character,(char_x,char_y))
     
     
