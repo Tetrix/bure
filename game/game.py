@@ -1,4 +1,4 @@
-main_char = "resources/penguin.png"
+main_char = "resources/penguin.jpg"
 
 import pygame
 from pygame.locals import *
@@ -13,7 +13,8 @@ char_x = 100
 char_y = 300
 char_speed = 200
 
-character = pygame.image.load(main_char).convert()
+character = pygame.image.load(main_char).convert_alpha()
+character = pygame.transform.scale(character,(50,69))
 
 while True:
     
@@ -38,8 +39,9 @@ while True:
         char_y -= char_speed * time_passed_seconds
     if pressed_keys[K_DOWN]:
         char_y += char_speed * time_passed_seconds          
+    # end of the movement
     
-    # if character goues out of the screen
+    # if character goes out of the screen
             
     if char_x >= 750:
         char_x = 750
@@ -49,7 +51,9 @@ while True:
         char_y = 0
     if char_y >= 531:
         char_y = 531
-        
+    
+    # end    
+    
     screen.fill((255,255,255))            
     screen.blit(character,(char_x,char_y))
     
