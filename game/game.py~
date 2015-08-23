@@ -1,7 +1,12 @@
+<<<<<<< HEAD
 main_char = "resources/pengusin.png"
 wheel_file= "resources/wheel.png"
 xx = 270
 yy = 80
+=======
+main_char = "resources/penguin.png"
+
+>>>>>>> 0ee572c4f8240fb74b1e6ba390b5d9f08fe1db99
 import pygame
 from pygame.locals import *
 from sys import exit
@@ -33,6 +38,8 @@ while True:
     
     pressed_keys = pygame.key.get_pressed()
     
+    
+    
     # making the character move
     
     if pressed_keys[K_RIGHT]:
@@ -43,7 +50,17 @@ while True:
         char_y -= char_speed * time_passed_seconds
     if pressed_keys[K_DOWN]:
         char_y += char_speed * time_passed_seconds          
+    
+    # if character goues out of the screen
             
+    if char_x >= 750:
+        char_x = 750
+    if char_x <= 0:
+        char_x = 0
+    if char_y <= 0:
+        char_y = 0
+    if char_y >= 531:
+        char_y = 531
         
     screen.fill((255,255,255))
     screen.blit(wheel,(wheel_x,wheel_y))            
