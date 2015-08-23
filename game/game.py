@@ -1,11 +1,22 @@
+<<<<<<< HEAD
 main_char = "resources/penguin.jpg"
+=======
+main_char = "resources/penguin.png"
+<<<<<<< HEAD
+wheel_file= "resources/wheel.png"
+xx = 270
+yy = 80
+=======
+>>>>>>> eef302cd7820e1baa65dcb3d8a8251dc109baadd
 
+>>>>>>> 0ee572c4f8240fb74b1e6ba390b5d9f08fe1db99
 import pygame
 from pygame.locals import *
 from sys import exit
-
+import os
 pygame.init()
 
+os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (xx,yy)
 screen = pygame.display.set_mode((800,600),0,32)
 clock = pygame.time.Clock()
 
@@ -13,9 +24,17 @@ char_x = 100
 char_y = 300
 char_speed = 200
 
+<<<<<<< HEAD
 character = pygame.image.load(main_char).convert_alpha()
 character = pygame.transform.scale(character,(50,69))
+=======
+wheel_x=320
+wheel_y=60
+>>>>>>> eef302cd7820e1baa65dcb3d8a8251dc109baadd
 
+character = pygame.image.load(main_char).convert_alpha()
+character=pygame.transform.scale(character,(50,69))
+wheel=pygame.image.load(wheel_file).convert_alpha()
 while True:
     
     for event in pygame.event.get():
@@ -51,10 +70,16 @@ while True:
         char_y = 0
     if char_y >= 531:
         char_y = 531
+<<<<<<< HEAD
     
     # end    
     
     screen.fill((255,255,255))            
+=======
+        
+    screen.fill((255,255,255))
+    screen.blit(wheel,(wheel_x,wheel_y))            
+>>>>>>> eef302cd7820e1baa65dcb3d8a8251dc109baadd
     screen.blit(character,(char_x,char_y))
     
     
