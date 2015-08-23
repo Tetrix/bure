@@ -1,11 +1,14 @@
-main_char = "penguin.png"
-
+main_char = "resources/penguin.png"
+wheel_file= "resources/wheel.png"
+xx = 270
+yy = 80
 import pygame
 from pygame.locals import *
 from sys import exit
-
+import os
 pygame.init()
 
+os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (xx,yy)
 screen = pygame.display.set_mode((800,600),0,32)
 clock = pygame.time.Clock()
 
@@ -13,8 +16,12 @@ char_x = 100
 char_y = 300
 char_speed = 200
 
-character = pygame.image.load(main_char).convert()
+wheel_x=320
+wheel_y=60
 
+character = pygame.image.load(main_char).convert_alpha()
+character=pygame.transform.scale(character,(50,69))
+wheel=pygame.image.load(wheel_file).convert_alpha()
 while True:
     
     for event in pygame.event.get():
@@ -38,7 +45,8 @@ while True:
         char_y += char_speed * time_passed_seconds          
             
         
-    screen.fill((255,255,255))            
+    screen.fill((255,255,255))
+    screen.blit(wheel,(wheel_x,wheel_y))            
     screen.blit(character,(char_x,char_y))
     
     
