@@ -1,9 +1,8 @@
 background = "resources/ledena_doba.jpg"
-wheel_file= "resources/circle.png"
-star_file="resources/star2/s2_1.png"
-
-window_x = 270
-window_y = 80
+star_file = "resources/star2/s2_1.png"
+s1 = 'resources/star2/s2_1.png'
+s2 = 'resources/star2/s2_2.png'
+s3 = 'resources/star2/s2_3.png'
 
 import pygame
 from pygame.locals import *
@@ -12,68 +11,25 @@ import os
 import time
 from gameobjects.vector2 import Vector2
 from math import *
-from character import Character
 import random
+from character import Character
+from wheel import Wheel
+from star import Star
 
 pygame.init()
 
+window_x = 270
+window_y = 80
+
 # Window positioning
 os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (window_x,window_y)
-
-myfont = pygame.font.SysFont("resources/fonts/Attic.ttf", 40)
-goalfont = pygame.font.Font("resources/fonts/Attic.ttf", 30)
+# Loading font
+myfont = pygame.font.SysFont("resources/fonts/gentium.ttf", 40)
+goalfont = pygame.font.Font("resources/fonts/ubuntu.ttf", 30)
 
 screen = pygame.display.set_mode((800,600),0,32)
 clock = pygame.time.Clock()
 pygame.mouse.set_visible(0)
-
-
-
-
-# Wheel caracteristics
-wheel_pos = Vector2(450, 300)
-wheel_speed = 300.
-wheel_ue_speed=500
-wheel_rotation = 0.
-wheel_rotation_speed = -50. # Degrees per second
-wheel_rotate=pygame.USEREVENT + 1
-pygame.time.set_timer(wheel_rotate,wheel_ue_speed)
-wheel_rotation_direction = 0.
-wheel=pygame.image.load(wheel_file).convert_alpha()
-
-# Star caracteristics
-star_pos = Vector2(447, 302)
-star_speed = 300.
-star_rotation = 0.
-star_rotation_speed = -50. # Degrees per second
-star_rotation_direction =0.
-
-# Star border changing color
-
-
-
-wheel=pygame.image.load(wheel_file).convert_alpha()
-star=pygame.image.load(star_file).convert_alpha()
-star=pygame.transform.scale(star,(550,550))
-
-s1='resources/star2/s2_1.png'
-s2='resources/star2/s2_2.png'
-s3='resources/star2/s2_3.png'
-
-star_event=pygame.USEREVENT +2
-star_event_speed=100
-pygame.time.set_timer(star_event,star_event_speed)
-
-star2_event=pygame.USEREVENT +3
-star2_event_speed=50
-pygame.time.set_timer(star2_event,star2_event_speed)
-
-star3_event=pygame.USEREVENT +4
-star3_event_speed=20
-pygame.time.set_timer(star3_event,star3_event_speed)
-
-
-
 
 #Background
 ledena_doba = pygame.image.load(background).convert()
@@ -83,33 +39,37 @@ ledena_doba = pygame.transform.scale(ledena_doba,(800,600))
 main_character = Character()
 main_character.properties()
 
-while True: #main loop
+#making instance of class Wheel
+first_wheel = Wheel()
+first_wheel.wheel_properties()
+
+#making instance of class Star
+star_object = Star()
+star_object.star_properties()
+
+#main loop
+while True: 
     
     for event in pygame.event.get():
         if event.type == QUIT:
             exit()
 
-        if event.type == wheel_rotate: #rotate the wheel and the star 
-            wheel_rotation_direction=+1.0
-            star_rotation_direction=+1.0    
-
-    
-    
-
-        if event.type == star_event:
+        if event.type == first_wheel.wheel_rotate: #rotate the wheel and the star 
+            first_wheel.wheel_rotation_direction=+1.0
+            star_object.star_rotation_direction=+1.0   
+        if event.type == star_object.star_event:
             star_file=s1
-        if event.type == star2_event:
+        if event.type == star_object.star2_event:
             star_file=s2
-        if event.type == star3_event:
+        if event.type == star_object.star3_event:
             star_file=s3
            
     time_passed = clock.tick(80)
-
     time_passed_seconds = time_passed / 1000.0
     
     pressed_keys = pygame.key.get_pressed()
-    star=pygame.image.load(star_file).convert_alpha()
-    star=pygame.transform.scale(star,(480,480))
+    star_object.star=pygame.image.load(star_file).convert_alpha()
+    star_object.star=pygame.transform.scale(star_object.star,(480,480))
     # making the character move
     
     if pressed_keys[K_RIGHT]:
@@ -131,8 +91,7 @@ while True: #main loop
     if main_character.char_y <= 0:
         main_character.char_y = 0
     if main_character.char_y >= 545:
-        main_character.char_y = 545  
-    # end    
+        main_character.char_y = 545     
 
     # displaying numbers in the wheel
     
@@ -155,44 +114,38 @@ while True: #main loop
     screen.blit(ledena_doba,(0,0))
     screen.blit(goal,(10,10))
     
-    wheel.blit(two, (80, 170))
-    wheel.blit(four, (170, 100)) 
-    wheel.blit(nine, (275, 100))
-    wheel.blit(seven, (360,180))
-    wheel.blit(one, (390, 300))
-    wheel.blit(eight, (285, 360))
-    wheel.blit(plus, (170, 360))
-    wheel.blit(five, (80, 285))
+    first_wheel.wheel.image.blit(two, (80, 170))
+    first_wheel.wheel.image.blit(four, (170, 100)) 
+    first_wheel.wheel.image.blit(nine, (275, 100))
+    first_wheel.wheel.image.blit(seven, (380,160))
+    first_wheel.wheel.image.blit(one, (390, 300))
+    first_wheel.wheel.image.blit(eight, (285, 360))
+    first_wheel.wheel.image.blit(plus, (170, 360))
+    first_wheel.wheel.image.blit(five, (80, 285))
     
     
     # Making the wheel rotate (bliting the wheel with same width height & same position)
-    rotated_wheel = pygame.transform.rotate(wheel, wheel_rotation)
+    rotated_wheel = pygame.transform.rotate(first_wheel.wheel.image, first_wheel.wheel_rotation)
     w, h = rotated_wheel.get_size()
-    wheel_draw_pos = Vector2(wheel_pos.x-w/2, wheel_pos.y-h/2) 
+    wheel_draw_pos = Vector2(first_wheel.wheel_pos.x-w/2, first_wheel.wheel_pos.y-h/2) 
     screen.blit(rotated_wheel, wheel_draw_pos)
 
     # Making the star rotate (bliting the star with same width height & same position)
-    rotated_star = pygame.transform.rotate(star, star_rotation)
+    rotated_star = pygame.transform.rotate(star_object.star, star_object.star_rotation)
     w2, h2 = rotated_star.get_size()
-    star_draw_pos = Vector2(star_pos.x-w2/2, star_pos.y-h2/2) 
+    star_draw_pos = Vector2(star_object.star_pos.x-w2/2, star_object.star_pos.y-h2/2) 
     screen.blit(rotated_star, star_draw_pos)
     
     time_passed = clock.tick()
     time_passed_seconds = time_passed / 1000.0
     
     #wheel rotation
-    wheel_rotation += wheel_rotation_direction * wheel_rotation_speed *time_passed_seconds
+    first_wheel.wheel_rotation += first_wheel.wheel_rotation_direction * first_wheel.wheel_rotation_speed *time_passed_seconds
     #star rotation
-    star_rotation += star_rotation_direction * star_rotation_speed *time_passed_seconds
+    star_object.star_rotation += star_object.star_rotation_direction * star_object.star_rotation_speed *time_passed_seconds
     
     
-    screen.blit(main_character.character,(main_character.char_x,main_character.char_y))
+    screen.blit(main_character.character.image,(main_character.char_x,main_character.char_y))
     
 
-    pygame.display.update()
-    
-    
-    
-    
-    
-    
+    pygame.display.update() 
