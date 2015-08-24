@@ -1,7 +1,7 @@
 main_char = "resources/penguin.png"
 background = "resources/ledena_doba.jpg"
 wheel_file= "resources/circle.png"
-star_file="resources/star.png"
+star_file="resources/star2/s2_1.png"
 
 window_x = 270
 window_y = 80
@@ -13,13 +13,14 @@ import os
 import time
 from gameobjects.vector2 import Vector2
 from math import *
+import random
 pygame.init()
 
 # Window positioning
 os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (window_x,window_y)
 
-myfont = pygame.font.SysFont("resources/Attic.ttf", 40)
-goalfont = pygame.font.Font("resources/Attic.ttf", 30)
+myfont = pygame.font.SysFont("resources/fonts/Attic.ttf", 40)
+goalfont = pygame.font.Font("resources/fonts/Attic.ttf", 30)
 
 screen = pygame.display.set_mode((800,600),0,32)
 clock = pygame.time.Clock()
@@ -30,6 +31,8 @@ pygame.mouse.set_visible(0)
 char_x = 100
 char_y = 300
 char_speed = 200
+character = pygame.image.load(main_char).convert_alpha()
+character=pygame.transform.scale(character,(35,55))
 
 # Wheel caracteristics
 wheel_pos = Vector2(450, 300)
@@ -40,6 +43,7 @@ wheel_rotation_speed = -50. # Degrees per second
 wheel_rotate=pygame.USEREVENT + 1
 pygame.time.set_timer(wheel_rotate,wheel_ue_speed)
 wheel_rotation_direction = 0.
+wheel=pygame.image.load(wheel_file).convert_alpha()
 
 # Star caracteristics
 star_pos = Vector2(447, 302)
@@ -48,12 +52,23 @@ star_rotation = 0.
 star_rotation_speed = -50. # Degrees per second
 star_rotation_direction =0.
 
+# Star border changing color
 
-character = pygame.image.load(main_char).convert_alpha()
-character=pygame.transform.scale(character,(35,55))
-wheel=pygame.image.load(wheel_file).convert_alpha()
-star=pygame.image.load(star_file).convert_alpha()
-star=pygame.transform.scale(star,(550,550))
+s1='resources/star2/s2_1.png'
+s2='resources/star2/s2_2.png'
+s3='resources/star2/s2_3.png'
+
+star_event=pygame.USEREVENT +2
+star_event_speed=100
+pygame.time.set_timer(star_event,star_event_speed)
+
+star2_event=pygame.USEREVENT +3
+star2_event_speed=50
+pygame.time.set_timer(star2_event,star2_event_speed)
+
+star3_event=pygame.USEREVENT +4
+star3_event_speed=20
+pygame.time.set_timer(star3_event,star3_event_speed)
 
 #Background
 ledena_doba = pygame.image.load(background).convert()
@@ -70,12 +85,19 @@ while True: #main loop
         if event.type == wheel_rotate: #rotate the wheel and the star 
             wheel_rotation_direction=+1.0
             star_rotation_direction=+1.0    
-
-    time_passed = clock.tick(50)
+        if event.type == star_event:
+            star_file=s1
+        if event.type == star2_event:
+            star_file=s2
+        if event.type == star3_event:
+            star_file=s3
+           
+    time_passed = clock.tick(80)
     time_passed_seconds = time_passed / 1000.0
     
     pressed_keys = pygame.key.get_pressed()
-    
+    star=pygame.image.load(star_file).convert_alpha()
+    star=pygame.transform.scale(star,(480,480))
     # making the character move
     
     if pressed_keys[K_RIGHT]:
