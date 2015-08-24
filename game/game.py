@@ -28,12 +28,6 @@ clock = pygame.time.Clock()
 pygame.mouse.set_visible(0)
 
 
-# Character carateristics
-char_x = 100
-char_y = 300
-char_speed = 200
-character = pygame.image.load(main_char).convert_alpha()
-character=pygame.transform.scale(character,(35,55))
 
 
 # Wheel caracteristics
