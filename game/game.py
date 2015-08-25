@@ -23,12 +23,19 @@ window_y = 80
 
 
 
+
 # Window positioning
 os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (window_x,window_y)
 
 pygame.display.set_caption('BURE')
 
 myfont = pygame.font.Font("resources/fonts/gentium.ttf", 40)
+
+# Window positioning
+os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (window_x,window_y)
+# Loading font
+myfont = pygame.font.SysFont("resources/fonts/gentium.ttf", 40)
+
 goalfont = pygame.font.Font("resources/fonts/ubuntu.ttf", 30)
 
 screen = pygame.display.set_mode((800,600),0,32)
@@ -53,6 +60,7 @@ star_object.star_properties()
 
 star_draw_pos =Vector2(447,302)
 
+
 #main loop
 while True: 
     
@@ -61,8 +69,13 @@ while True:
             exit()
 
         if event.type == first_wheel.wheel_rotate: #rotate the wheel and the star 
+
             first_wheel.wheel_rotation_direction=+0.0
             star_object.star_rotation_direction=+0.0   
+
+            first_wheel.wheel_rotation_direction=+1.0
+            star_object.star_rotation_direction=+1.0   
+
         if event.type == star_object.star_event:
             star_file=s1
         if event.type == star_object.star2_event:
@@ -77,9 +90,13 @@ while True:
     time_passed_seconds = time_passed / 1000.0
     
     pressed_keys = pygame.key.get_pressed()
+
     star_object.star=pygame.image.load(star_file).convert()
     star_object.star.set_colorkey((255,255,255))
     star_object.star=pygame.transform.scale(star_object.star,(475,475))
+
+    
+
     # making the character move
     
     if pressed_keys[K_RIGHT]:
@@ -124,6 +141,7 @@ while True:
     screen.blit(ledena_doba,(0,0))
     screen.blit(goal,(10,10))
     
+
     first_wheel.wheel.blit(two, (80, 170))
     first_wheel.wheel.blit(four, (170, 100)) 
     first_wheel.wheel.blit(nine, (275, 100))

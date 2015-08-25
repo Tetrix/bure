@@ -9,7 +9,7 @@ class Wheel(object):
 
         self.wheel=pygame.image.load(wheel_file).convert_alpha()
 
-       
+        self.wheel.image=pygame.image.load(wheel_file).convert_alpha()
 
         
         

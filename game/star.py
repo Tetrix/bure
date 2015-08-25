@@ -5,12 +5,17 @@ star_file="resources/star2/s2_1.png"
 
 class Star(object):
     def __init__(self):
+
         self.star=pygame.image.load(star_file).convert()
         self.star.set_colorkey((255,255,255))
           
         self.star_mask = pygame.mask.from_surface(self.star)
         self.star_rect = self.star.get_rect()
-        
+
+        self.star=pygame.image.load(star_file).convert_alpha()
+        self.star=pygame.transform.scale(self.star,(550,550))    
+    
+
     def star_properties(self):
         self.star_pos = Vector2(447, 302)
         self.star_speed = 300.
@@ -18,7 +23,7 @@ class Star(object):
         self.star_rotation_speed = -50. # Degrees per second
         self.star_rotation_direction =0.
         
-        
+
         self.star_event=pygame.USEREVENT +2
         self.star_event_speed = 100
         pygame.time.set_timer(self.star_event,self.star_event_speed)
