@@ -6,7 +6,15 @@ wheel_file= "resources/circle.png"
 class Wheel(object):
     def __init__(self):
         self.wheel = pygame.sprite.Sprite()
-        self.wheel.image=pygame.image.load(wheel_file).convert_alpha()
+<<<<<<< HEAD
+        self.wheel=pygame.image.load(wheel_file).convert_alpha()
+=======
+
+        self.wheel=pygame.image.load(wheel_file).convert_alpha()
+
+       
+
+>>>>>>> 6d89ab7d152e502562b398af5126c2a7f3720733
         
         
     def wheel_properties(self):
