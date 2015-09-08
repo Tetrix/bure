@@ -19,10 +19,7 @@ class Character(object):
         self.char_y = 100
         self.char_speed = 170
     
-    #def properties(self):
-        #self.char_x = 100
-        #self.char_y = 100
-        #self.char_speed = 170
+
 
         
     def char_out_of_screen(self):
@@ -39,3 +36,12 @@ class Character(object):
        
 
     
+
+    def properties(self):
+        self.char_x = 100
+        self.char_y = 100
+        self.char_speed = 170
+
+        
+     
+

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 background = "resources/ledena_doba.jpg"
 import pygame
 import os
@@ -22,9 +23,11 @@ screen = pygame.display.set_mode((800,600),0,32)
 #Loading fonts
 myfont = pygame.font.Font("resources/fonts/gentium.ttf", 40)
 goalfont = pygame.font.Font("resources/fonts/goall.otf", 30)
+levelfont = pygame.font.Font("resources/fonts/goall.otf", 30)
+levelnumber = pygame.font.Font("resources/fonts/goall.otf", 30)
 sumfont = pygame.font.Font("resources/fonts/goall.otf", 30)
 class Level(object):
-    def __init__(self,background,zbir):
+    def __init__(self,background,zbir,level_num):
         
         #Background
         self.background_img = pygame.image.load(background).convert()
@@ -33,6 +36,8 @@ class Level(object):
       
     
         self.goal = goalfont.render("The number you need to get is: ",1,(0,0,0))
+        self.level_text = levelfont.render("Level: ",1,(0,0,0))
+        self.level_number = levelnumber.render(str(level_num), 1, (0,0,0))
         self.zbiro = goalfont.render(str(zbir), 1, (0,0,0))
         self.num_str= goalfont.render("|  1 2 3 4 5 6 7 8 9 ", 1, (239,239,239))
         
@@ -41,7 +46,9 @@ class Level(object):
         screen.blit(self.background_img,(0,0))
         screen.blit(self.goal,(10,10))
         screen.blit(self.zbiro,(435,10))  
-        screen.blit(self.num_str,(480,10))   
+        screen.blit(self.num_str,(480,10))
+        screen.blit(self.level_text,(10,40))
+        screen.blit(self.level_number,(95,40))   
 
     def loading_objects(self,acc1,acc2,acc3,acc4,acc5,acc6,acc7,acc8,acc9):
 
@@ -154,5 +161,24 @@ class Level(object):
         #suma=check_sum.check_sum(numbers_chosen,20,suma)
         screen.blit(suma_txt,(60,470))
         #screen.blit(suma,(100,400))
+
+import pygame
+import os
+from gameobjects.vector2 import Vector2
+
+background = "resources/ledena_doba.jpg"
+
+pygame.init()
+
+screen = pygame.display.set_mode((800,600),0,32)
+
+class Level(object):
+    def __init__(self):
+        
+        #Background
+        self.ledena_doba = pygame.image.load(background).convert()
+        self.ledena_doba = pygame.transform.scale(self.ledena_doba,(800,600))
+      
+    
 
 

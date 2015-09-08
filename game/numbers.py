@@ -1,4 +1,6 @@
+
 from math import *
+
 zero = 'resources/digits/0.png'
 one = 'resources/digits/1.png'
 two = 'resources/digits/2.png'
@@ -17,7 +19,9 @@ add = 'resources/digits/plus.png'
 import pygame
 from gameobjects.vector2 import Vector2
 
+
 screen = pygame.display.set_mode((800,600),0,32)
+
 
 class Numbers(object):
     def __init__(self):
@@ -72,6 +76,7 @@ class Numbers(object):
         self.devet_rect = self.devet.get_rect()
         self.devet_mask = pygame.mask.from_surface(self.devet)
         
+
         
         
             
@@ -144,5 +149,29 @@ class Numbers(object):
         self.nine_c=False    
 
     
-    
+
+        self.delenje = pygame.image.load(divide).convert()
+        self.delenje.set_colorkey((0,0,0))
+        self.delenje_rect = self.delenje.get_rect()
+        self.delenje_mask = pygame.mask.from_surface(self.delenje)
+        
+        self.mnozenje = pygame.image.load(multiply).convert()
+        self.mnozenje.set_colorkey((0,0,0))
+        self.mnozenje_rect = self.mnozenje.get_rect()
+        self.mnozenje_mask = pygame.mask.from_surface(self.mnozenje)
+        
+        self.minus = pygame.image.load(subtract).convert()
+        self.minus.set_colorkey((0,0,0))
+        self.minus_rect = self.minus.get_rect()
+        self.minus_mask = pygame.mask.from_surface(self.minus)
+        
+        self.plus = pygame.image.load(add).convert()
+        self.plus.set_colorkey((0,0,0))
+        self.plus_rect = self.plus.get_rect()
+        self.plus_mask = pygame.mask.from_surface(self.plus)
+        
+        
+        
+        
+
        

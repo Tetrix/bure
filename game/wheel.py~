@@ -1,10 +1,8 @@
 import pygame
 from gameobjects.vector2 import Vector2
-window_x = 270
-window_y = 80
+
 wheel_file= "resources/circle.png"
-#import os
-#s.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (window_x,window_y)
+
 class Wheel(object):
     def __init__(self):
         self.wheel = pygame.sprite.Sprite()
