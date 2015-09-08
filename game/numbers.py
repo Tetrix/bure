@@ -150,25 +150,6 @@ class Numbers(object):
 
     
 
-        self.delenje = pygame.image.load(divide).convert()
-        self.delenje.set_colorkey((0,0,0))
-        self.delenje_rect = self.delenje.get_rect()
-        self.delenje_mask = pygame.mask.from_surface(self.delenje)
-        
-        self.mnozenje = pygame.image.load(multiply).convert()
-        self.mnozenje.set_colorkey((0,0,0))
-        self.mnozenje_rect = self.mnozenje.get_rect()
-        self.mnozenje_mask = pygame.mask.from_surface(self.mnozenje)
-        
-        self.minus = pygame.image.load(subtract).convert()
-        self.minus.set_colorkey((0,0,0))
-        self.minus_rect = self.minus.get_rect()
-        self.minus_mask = pygame.mask.from_surface(self.minus)
-        
-        self.plus = pygame.image.load(add).convert()
-        self.plus.set_colorkey((0,0,0))
-        self.plus_rect = self.plus.get_rect()
-        self.plus_mask = pygame.mask.from_surface(self.plus)
         
         
         

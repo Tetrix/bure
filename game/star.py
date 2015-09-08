@@ -9,28 +9,6 @@ class Star(object):
         self.star2_file="resources/star2/s2_2.png"
         self.star3_file="resources/star2/s2_3.png"
 
-
-
-class Star(object):
-    def __init__(self):
-        self.star_file="resources/star2/s2_1.png"
-        self.star2_file="resources/star2/s2_2.png"
-        self.star3_file="resources/star2/s2_3.png"
-        self.star=pygame.image.load(self.star_file).convert()
-        self.star = pygame.transform.scale(self.star,(470,470))
-        
-        self.star.set_colorkey((255,255,255))
-        
-        self.star_mask = pygame.mask.from_surface(self.star)
-        self.star_rect = self.star.get_rect()
-        self.star_pos = Vector2(447, 302)
-
-        
-
-            
-    
-
-
     def star_properties(self):
         
         self.star_speed = 300.

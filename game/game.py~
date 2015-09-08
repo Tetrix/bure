@@ -319,7 +319,7 @@ def main():
                 
             
 
-                level_one.wheel_star_rotation(1.0,1.2)#1.1 
+                level_one.wheel_star_rotation(1.0,1.2) 
                 
                 level_one.star_object.image_marking()
 
@@ -359,7 +359,7 @@ def main():
                 screen.blit(level_one.first_wheel.rotated_wheel, level_one.first_wheel.wheel_draw_pos)
                 screen.blit(level_one.star_object.rotated_star, level_one.star_object.star_draw_pos)
                            
-                level_one.numbers_rotated(9,0.043)#0,20
+                level_one.numbers_rotated(9,0.043)
                
                 
                 #wheel rotation
@@ -1148,7 +1148,7 @@ def main():
         screen.blit(main_character.character,(main_character.char_x,main_character.char_y))
         
         #collision detection for the character and the star
-        collision_detection(main_character.character,star_object.star_rect.left , star_object.star_rect.top , main_character.character_rect.left , main_character.character_rect.top , star_object.star_mask , main_character.character_mask)
+        #collision_detection(main_character.character,star_object.star_rect.left , star_object.star_rect.top , main_character.character_rect.left , main_character.character_rect.top , star_object.star_mask , main_character.character_mask)
         
         
         #collision detection for the number one

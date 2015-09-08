@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 background = "resources/ledena_doba.jpg"
 import pygame
 import os
