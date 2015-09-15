@@ -1,12 +1,28 @@
 bure_f= "resources/bure.png"
 game_over_f= 'resources/game-over.png'
-<<<<<<< HEAD
+
+#Level 1-5
+wheel_file= "resources/level1/wheel.png"
+star_file="resources/level1/star.png"
+background = "resources/level1/bg_lvl1.png"
+lvl1_color = (157,186,236)
+
+
+#Level 6-10
+background2 = "resources/level2/bg_lv2.png"
+star2_small = "resources/level2/small_star.png"
+star2_big = "resources/level2/big_star.png"
+wheel2_file = "resources/level2/wheel.png"
+lvl2_color=(95,172,93)
+
+
+
+
+
+
 window_x = 270
 window_y = 80
 
-=======
-numbers_chosen = []
->>>>>>> fb4e67350169539cb17f4e05d601d65908ba08f6
 import pygame
 from pygame.locals import *
 from sys import exit
@@ -18,7 +34,6 @@ import random
 from character import Character
 from wheel import Wheel
 from star import Star
-<<<<<<< HEAD
 from numbers import *
 from level import *
 from check_sum import *
@@ -40,86 +55,21 @@ def collision_detection(obj2,object1_rect_left , object1_rect_top , object2_rect
             death_level()
         
     
-=======
-from numbers import Numbers
-from level import *
-
->>>>>>> fb4e67350169539cb17f4e05d601d65908ba08f6
 
 pygame.init()
 bure = pygame.image.load(bure_f)
 pygame.display.set_icon(bure)
-<<<<<<< HEAD
 pygame.display.set_caption('BURE')
-=======
-
-def collision_detection(obj2,object1_rect_left , object1_rect_top , object2_rect_left , object2_rect_top , object1_mask , object2_mask ):
-    offset_x, offset_y = int((object1_rect_left - object2_rect_left)), int((object1_rect_top - object2_rect_top))
-    if (object2_mask.overlap(object1_mask, (offset_x, offset_y)) != None):
-       
-        screen.blit(game_over,go_coordinates)
-        pygame.time.set_timer(USEREVENT+1,1)
-     
-         
-        for event in pygame.event.get():
-           if event.type == USEREVENT+1:
-            time.sleep(1)
-            main()
-        
-
-
-def collision_detection_numbers(val,obj1,obj2,object1_rect_left , object1_rect_top , object2_rect_left , object2_rect_top , object1_mask , object2_mask,numbers_chosen ):
-    offset_x, offset_y = int((object1_rect_left - object2_rect_left)), int((object1_rect_top - object2_rect_top))
-    if (object2_mask.overlap(object1_mask, (offset_x, offset_y)) != None):
-        print "COLLISION DETECTED"
-        if val not in numbers_chosen:
-            numbers_chosen.append(val)
-            obj1.set_alpha(0)        
-            return True
-        else: 
-            return False
-    else: 
-       return False
-
-
-def check_sum(numbers_chosen,zbir):
-    suma = 0
-    for num in numbers_chosen:
-        suma += num
-    if zbir == suma:
-        print "UDZU"
-
-#function for number rotation        
-def num_rotation(obj,x,y,acc):
-    angle = 0.
-    speed = (2*3.14)/7.2
-    radius = 150
-    angle += speed * acc
-    x = cos(angle) * radius + 420
-    y = sin(angle) * radius + 280  
-    screen.blit(obj,(x,y)) 
-    return x,y
->>>>>>> fb4e67350169539cb17f4e05d601d65908ba08f6
 
 game_over = pygame.image.load(game_over_f).convert_alpha()
 go_coordinates=Vector2(200,150)
 
-<<<<<<< HEAD
 pygame.mouse.set_visible(0)    
 
 
 
-=======
-#making instance of class level
-level_one = Level()
 
 
-#Window positioning
-os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (window_x,window_y)
->>>>>>> fb4e67350169539cb17f4e05d601d65908ba08f6
-
-
-<<<<<<< HEAD
 
 
 
@@ -132,14 +82,16 @@ os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (window_x,window_y)
 def main():
 
 
-
         def level_one():
             
             numbers_chosen = [] 
             #OBJECT OF CLASS Level
-            the_sum=random.randint(10,45)
-            level_one = Level(background,the_sum,1)
-            level_one.loading_objects(26200000,10000000,31600000,15400000,28900000,12700000,23500000,18100000,20800000)
+            the_sum=random.randint(20,30)
+            level_one = Level(background,the_sum,1,lvl1_color,lvl1_color)
+            level_one.loading_objects(26200000,10000000,31600000,15400000,28900000,12700000,23500000,18100000,20800000,None,None,None,None,None,None,None,None,None)
+            level_one.star_load(star_file,300,300,300,300)
+            level_one.wheel_load(wheel_file,470,470,450, 300)
+            level_one.load_char()
 
             clock = pygame.time.Clock()
          
@@ -149,9 +101,9 @@ def main():
                 
             
 
-                level_one.wheel_star_rotation(1.0,0.7) 
+                level_one.wheel_star_rotation(1.0,0.55) 
                 
-                level_one.star_object.image_marking()
+                level_one.star_object.image_marking(star_file,470,470,447, 302)
 
                 level_one.main_character.character_rect.topleft = (level_one.main_character.char_x,level_one.main_character.char_y)
                 #end of star changing color      
@@ -185,12 +137,13 @@ def main():
                 
 
                 screen.fill((0,0,0))   
-                level_one.blit_main()     
+                level_one.blit_main(False)     
                 screen.blit(level_one.first_wheel.rotated_wheel, level_one.first_wheel.wheel_draw_pos)
                 screen.blit(level_one.star_object.rotated_star, level_one.star_object.star_draw_pos)
                            
-                level_one.numbers_rotated(9,0.032)
-               
+                level_one.numbers_rotated()
+                for i in range(9):
+                    level_one.num_obj.acceleration_list[i]-=0.023
                 
                 #wheel rotation
                 level_one.first_wheel.wheel_rotation += level_one.first_wheel.wheel_rotation_direction * level_one.first_wheel.wheel_rotation_speed *time_passed_seconds
@@ -214,7 +167,7 @@ def main():
                    num1 = goalfont.render("1", 1, (0,0,0))
                    level_one.num_obj.one_c=True
                 if(level_one.num_obj.one_c==True):
-                   screen.blit(num1,(534,10))#406+128
+                   screen.blit(num1,(104,60))#406+128
          
                 #collision detection for the number two
                 coli_2=level_one.num_obj.collision_detection_numbers(2,level_one.num_obj.dva,level_one.main_character.character,level_one.num_obj.dva_pos.x , level_one.num_obj.dva_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.dva_mask , level_one.main_character.character_mask,numbers_chosen)
@@ -222,7 +175,7 @@ def main():
                    num2 = goalfont.render("2", 1, (0,0,0))
                    level_one.num_obj.two_c=True
                 if(level_one.num_obj.two_c==True):
-                   screen.blit(num2,(558,10))
+                   screen.blit(num2,(128,60))
                    
                 #collision detection for the number three
                 coli_3=level_one.num_obj.collision_detection_numbers(3,level_one.num_obj.tri,level_one.main_character.character,level_one.num_obj.tri_pos.x , level_one.num_obj.tri_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.tri_mask , level_one.main_character.character_mask,numbers_chosen)   
@@ -230,7 +183,7 @@ def main():
                    num3 = goalfont.render("3", 1, (0,0,0))
                    level_one.num_obj.three_c=True
                 if(level_one.num_obj.three_c==True):
-                   screen.blit(num3,(583,10))
+                   screen.blit(num3,(153,60))
 
                 #collision detection for the number four
                 coli_4=level_one.num_obj.collision_detection_numbers(4,level_one.num_obj.cetiri,level_one.main_character.character,level_one.num_obj.cetiri_pos.x , level_one.num_obj.cetiri_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.cetiri_mask , level_one.main_character.character_mask,numbers_chosen)
@@ -238,7 +191,7 @@ def main():
                    num4 = goalfont.render("4", 1, (0,0,0))
                    level_one.num_obj.four_c=True
                 if(level_one.num_obj.four_c==True):
-                   screen.blit(num4,(608,10))
+                   screen.blit(num4,(178,60))
                  
                 #collision detection for the number five
                 coli_5=level_one.num_obj.collision_detection_numbers(5,level_one.num_obj.pet,level_one.main_character.character,level_one.num_obj.pet_pos.x , level_one.num_obj.pet_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.pet_mask , level_one.main_character.character_mask,numbers_chosen)  
@@ -246,7 +199,7 @@ def main():
                    num5 = goalfont.render("5", 1, (0,0,0))
                    level_one.num_obj.five_c=True
                 if(level_one.num_obj.five_c==True):
-                   screen.blit(num5,(637,10)) 
+                   screen.blit(num5,(207,60)) 
 
                 #collision detection for the number six
                 coli_6=level_one.num_obj.collision_detection_numbers(6,level_one.num_obj.sest,level_one.main_character.character,level_one.num_obj.sest_pos.x , level_one.num_obj.sest_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.sest_mask , level_one.main_character.character_mask,numbers_chosen)
@@ -254,7 +207,7 @@ def main():
                    num6 = goalfont.render("6", 1, (0,0,0))
                    level_one.num_obj.six_c=True
                 if(level_one.num_obj.six_c==True):
-                   screen.blit(num6,(664,10))
+                   screen.blit(num6,(234,60))
 
                 #collision detection for the number seven
                 coli_7=level_one.num_obj.collision_detection_numbers(7,level_one.num_obj.sedum,level_one.main_character.character,level_one.num_obj.sedum_pos.x , level_one.num_obj.sedum_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.sedum_mask , level_one.main_character.character_mask,numbers_chosen)
@@ -262,29 +215,29 @@ def main():
                    num7 = goalfont.render("7", 1, (0,0,0))
                    level_one.num_obj.seven_c=True
                 if(level_one.num_obj.seven_c==True):
-                   screen.blit(num7,(690,10))
+                   screen.blit(num7,(260,60))
                 #collision detection for the number eight
                 coli_8=level_one.num_obj.collision_detection_numbers(8,level_one.num_obj.osum,level_one.main_character.character,level_one.num_obj.osum_pos.x , level_one.num_obj.osum_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.osum_mask , level_one.main_character.character_mask,numbers_chosen)
                 if coli_8==True:
                    num8 = goalfont.render("8", 1, (0,0,0))
                    level_one.num_obj.eight_c=True
                 if(level_one.num_obj.eight_c==True):
-                   screen.blit(num8,(717,10))
+                   screen.blit(num8,(287,60))
                 #collision detection for the number nine
                 coli_9=level_one.num_obj.collision_detection_numbers(9,level_one.num_obj.devet,level_one.main_character.character,level_one.num_obj.devet_pos.x , level_one.num_obj.devet_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.devet_mask , level_one.main_character.character_mask,numbers_chosen)
                 if coli_9==True:
                    num9 = goalfont.render(str(9), 1, (0,0,0))
                    level_one.num_obj.nine_c=True
                 if(level_one.num_obj.nine_c==True):
-                   screen.blit(num9,(742,10))
+                   screen.blit(num9,(312,60))
                      
-                summ=check_the_sum(numbers_chosen,the_sum,suma)
-                screen.blit(summ,(80,500))
-                level_one.print_text_sum()
+                summ=check_the_sum(numbers_chosen,the_sum,suma,lvl1_color)
+                screen.blit(summ,(680,500))
+                level_one.print_text_sum(lvl1_color)
                 check_sum(numbers_chosen,the_sum,suma,level_two,main)
                 pygame.display.update() 
 
-        #level_one()
+        
 
 
 
@@ -307,10 +260,12 @@ def main():
             
             numbers_chosen = [] 
             #OBJECT OF CLASS Level
-            the_sum2=random.randint(10,45)
-            level_one = Level(background,the_sum2,2)
-            level_one.loading_objects(26200000,10000000,28900000,12700000,31600000,18100000,23500000,15400000,20800000)
-
+            the_sum2=random.randint(20,30)
+            level_one = Level(background,the_sum2,2,lvl1_color,lvl1_color)
+            level_one.loading_objects(26200000,10000000,31600000,15400000,28900000,12700000,23500000,18100000,20800000,None,None,None,None,None,None,None,None,None)
+            level_one.star_load(star_file,300,300,300,300)
+            level_one.wheel_load(wheel_file,470,470,450, 300)
+            level_one.load_char()
             clock = pygame.time.Clock()
          
             suma = 0
@@ -319,9 +274,9 @@ def main():
                 
             
 
-                level_one.wheel_star_rotation(1.0,1.2) 
+                level_one.wheel_star_rotation(1.0,1.0) 
                 
-                level_one.star_object.image_marking()
+                level_one.star_object.image_marking(star_file,470,470,447, 302)
 
                 level_one.main_character.character_rect.topleft = (level_one.main_character.char_x,level_one.main_character.char_y)
                 #end of star changing color      
@@ -355,12 +310,13 @@ def main():
                 
 
                 screen.fill((0,0,0))   
-                level_one.blit_main()     
+                level_one.blit_main(False)     
                 screen.blit(level_one.first_wheel.rotated_wheel, level_one.first_wheel.wheel_draw_pos)
                 screen.blit(level_one.star_object.rotated_star, level_one.star_object.star_draw_pos)
                            
-                level_one.numbers_rotated(9,0.043)
-               
+                level_one.numbers_rotated()
+                for i in range(9):
+                    level_one.num_obj.acceleration_list[i]-=0.033
                 
                 #wheel rotation
                 level_one.first_wheel.wheel_rotation += level_one.first_wheel.wheel_rotation_direction * level_one.first_wheel.wheel_rotation_speed *time_passed_seconds
@@ -384,7 +340,7 @@ def main():
                    num1 = goalfont.render("1", 1, (0,0,0))
                    level_one.num_obj.one_c=True
                 if(level_one.num_obj.one_c==True):
-                   screen.blit(num1,(534,10))#406+128
+                   screen.blit(num1,(104,60))#406+128
          
                 #collision detection for the number two
                 coli_2=level_one.num_obj.collision_detection_numbers(2,level_one.num_obj.dva,level_one.main_character.character,level_one.num_obj.dva_pos.x , level_one.num_obj.dva_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.dva_mask , level_one.main_character.character_mask,numbers_chosen)
@@ -392,7 +348,7 @@ def main():
                    num2 = goalfont.render("2", 1, (0,0,0))
                    level_one.num_obj.two_c=True
                 if(level_one.num_obj.two_c==True):
-                   screen.blit(num2,(558,10))
+                   screen.blit(num2,(128,60))
                    
                 #collision detection for the number three
                 coli_3=level_one.num_obj.collision_detection_numbers(3,level_one.num_obj.tri,level_one.main_character.character,level_one.num_obj.tri_pos.x , level_one.num_obj.tri_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.tri_mask , level_one.main_character.character_mask,numbers_chosen)   
@@ -400,7 +356,7 @@ def main():
                    num3 = goalfont.render("3", 1, (0,0,0))
                    level_one.num_obj.three_c=True
                 if(level_one.num_obj.three_c==True):
-                   screen.blit(num3,(583,10))
+                   screen.blit(num3,(153,60))
 
                 #collision detection for the number four
                 coli_4=level_one.num_obj.collision_detection_numbers(4,level_one.num_obj.cetiri,level_one.main_character.character,level_one.num_obj.cetiri_pos.x , level_one.num_obj.cetiri_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.cetiri_mask , level_one.main_character.character_mask,numbers_chosen)
@@ -408,7 +364,7 @@ def main():
                    num4 = goalfont.render("4", 1, (0,0,0))
                    level_one.num_obj.four_c=True
                 if(level_one.num_obj.four_c==True):
-                   screen.blit(num4,(608,10))
+                   screen.blit(num4,(178,60))
                  
                 #collision detection for the number five
                 coli_5=level_one.num_obj.collision_detection_numbers(5,level_one.num_obj.pet,level_one.main_character.character,level_one.num_obj.pet_pos.x , level_one.num_obj.pet_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.pet_mask , level_one.main_character.character_mask,numbers_chosen)  
@@ -416,7 +372,7 @@ def main():
                    num5 = goalfont.render("5", 1, (0,0,0))
                    level_one.num_obj.five_c=True
                 if(level_one.num_obj.five_c==True):
-                   screen.blit(num5,(637,10)) 
+                   screen.blit(num5,(207,60)) 
 
                 #collision detection for the number six
                 coli_6=level_one.num_obj.collision_detection_numbers(6,level_one.num_obj.sest,level_one.main_character.character,level_one.num_obj.sest_pos.x , level_one.num_obj.sest_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.sest_mask , level_one.main_character.character_mask,numbers_chosen)
@@ -424,7 +380,7 @@ def main():
                    num6 = goalfont.render("6", 1, (0,0,0))
                    level_one.num_obj.six_c=True
                 if(level_one.num_obj.six_c==True):
-                   screen.blit(num6,(664,10))
+                   screen.blit(num6,(234,60))
 
                 #collision detection for the number seven
                 coli_7=level_one.num_obj.collision_detection_numbers(7,level_one.num_obj.sedum,level_one.main_character.character,level_one.num_obj.sedum_pos.x , level_one.num_obj.sedum_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.sedum_mask , level_one.main_character.character_mask,numbers_chosen)
@@ -432,26 +388,27 @@ def main():
                    num7 = goalfont.render("7", 1, (0,0,0))
                    level_one.num_obj.seven_c=True
                 if(level_one.num_obj.seven_c==True):
-                   screen.blit(num7,(690,10))
+                   screen.blit(num7,(260,60))
                 #collision detection for the number eight
                 coli_8=level_one.num_obj.collision_detection_numbers(8,level_one.num_obj.osum,level_one.main_character.character,level_one.num_obj.osum_pos.x , level_one.num_obj.osum_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.osum_mask , level_one.main_character.character_mask,numbers_chosen)
                 if coli_8==True:
                    num8 = goalfont.render("8", 1, (0,0,0))
                    level_one.num_obj.eight_c=True
                 if(level_one.num_obj.eight_c==True):
-                   screen.blit(num8,(717,10))
+                   screen.blit(num8,(287,60))
                 #collision detection for the number nine
                 coli_9=level_one.num_obj.collision_detection_numbers(9,level_one.num_obj.devet,level_one.main_character.character,level_one.num_obj.devet_pos.x , level_one.num_obj.devet_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.devet_mask , level_one.main_character.character_mask,numbers_chosen)
                 if coli_9==True:
                    num9 = goalfont.render(str(9), 1, (0,0,0))
                    level_one.num_obj.nine_c=True
                 if(level_one.num_obj.nine_c==True):
-                   screen.blit(num9,(742,10))
+                   screen.blit(num9,(312,60))
                      
-                summ=check_the_sum(numbers_chosen,the_sum2,suma)
-                screen.blit(summ,(80,500))
-                level_one.print_text_sum()
+                summ=check_the_sum(numbers_chosen,the_sum2,suma,lvl1_color)
+                screen.blit(summ,(680,500))
+                level_one.print_text_sum(lvl1_color)
                 check_sum(numbers_chosen,the_sum2,suma,level_three,level_two)
+
                 pygame.display.update() 
 
 
@@ -482,10 +439,12 @@ def main():
             
             numbers_chosen = [] 
             #OBJECT OF CLASS Level
-            the_sum3=random.randint(10,45)
-            level_one = Level(background,the_sum3,3)
-            level_one.loading_objects(12700000,10000000,23500000,18100000,28900000,20800000,26200000,15400000,31600000)
-
+            the_sum3=random.randint(30,40)
+            level_one = Level(background,the_sum3,3,lvl1_color,lvl1_color)
+            level_one.loading_objects(26200000,10000000,31600000,15400000,28900000,12700000,23500000,18100000,20800000,None,None,None,None,None,None,None,None,None)
+            level_one.star_load(star_file,300,300,300,300)
+            level_one.wheel_load(wheel_file,470,470,450, 300)
+            level_one.load_char()
             clock = pygame.time.Clock()
          
             suma = 0
@@ -496,7 +455,7 @@ def main():
 
                 level_one.wheel_star_rotation(1.0,0.7) 
                 
-                level_one.star_object.image_marking()
+                level_one.star_object.image_marking(star_file,470,470,447, 302)
 
                 level_one.main_character.character_rect.topleft = (level_one.main_character.char_x,level_one.main_character.char_y)
                 #end of star changing color      
@@ -530,12 +489,14 @@ def main():
                 
 
                 screen.fill((0,0,0))   
-                level_one.blit_main()     
+                level_one.blit_main(False)     
                 screen.blit(level_one.first_wheel.rotated_wheel, level_one.first_wheel.wheel_draw_pos)
                 screen.blit(level_one.star_object.rotated_star, level_one.star_object.star_draw_pos)
                            
-                level_one.numbers_rotated2(9,0.023)
-               
+                
+                level_one.numbers_rotated()
+		for i in range(9):
+                    level_one.num_obj.acceleration_list[i]-=0.023
                 
                 #wheel rotation
                 level_one.first_wheel.wheel_rotation += level_one.first_wheel.wheel_rotation_direction * level_one.first_wheel.wheel_rotation_speed *time_passed_seconds
@@ -552,14 +513,14 @@ def main():
                 #collision detection for the character and the star
                 collision_detection(level_one.main_character.character,level_one.star_object.star_rect.left , level_one.star_object.star_rect.top , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.star_object.star_mask , level_one.main_character.character_mask,level_three)
                 
-                #collision detection for the number one
+               #collision detection for the number one
                 coli_1=level_one.num_obj.collision_detection_numbers(1,level_one.num_obj.eden,level_one.main_character.character,level_one.num_obj.eden_pos.x , level_one.num_obj.eden_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.eden_mask , level_one.main_character.character_mask,numbers_chosen)
                         
                 if coli_1==True:
                    num1 = goalfont.render("1", 1, (0,0,0))
                    level_one.num_obj.one_c=True
                 if(level_one.num_obj.one_c==True):
-                   screen.blit(num1,(534,10))#406+128
+                   screen.blit(num1,(104,60))#406+128
          
                 #collision detection for the number two
                 coli_2=level_one.num_obj.collision_detection_numbers(2,level_one.num_obj.dva,level_one.main_character.character,level_one.num_obj.dva_pos.x , level_one.num_obj.dva_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.dva_mask , level_one.main_character.character_mask,numbers_chosen)
@@ -567,7 +528,7 @@ def main():
                    num2 = goalfont.render("2", 1, (0,0,0))
                    level_one.num_obj.two_c=True
                 if(level_one.num_obj.two_c==True):
-                   screen.blit(num2,(558,10))
+                   screen.blit(num2,(128,60))
                    
                 #collision detection for the number three
                 coli_3=level_one.num_obj.collision_detection_numbers(3,level_one.num_obj.tri,level_one.main_character.character,level_one.num_obj.tri_pos.x , level_one.num_obj.tri_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.tri_mask , level_one.main_character.character_mask,numbers_chosen)   
@@ -575,7 +536,7 @@ def main():
                    num3 = goalfont.render("3", 1, (0,0,0))
                    level_one.num_obj.three_c=True
                 if(level_one.num_obj.three_c==True):
-                   screen.blit(num3,(583,10))
+                   screen.blit(num3,(153,60))
 
                 #collision detection for the number four
                 coli_4=level_one.num_obj.collision_detection_numbers(4,level_one.num_obj.cetiri,level_one.main_character.character,level_one.num_obj.cetiri_pos.x , level_one.num_obj.cetiri_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.cetiri_mask , level_one.main_character.character_mask,numbers_chosen)
@@ -583,7 +544,7 @@ def main():
                    num4 = goalfont.render("4", 1, (0,0,0))
                    level_one.num_obj.four_c=True
                 if(level_one.num_obj.four_c==True):
-                   screen.blit(num4,(608,10))
+                   screen.blit(num4,(178,60))
                  
                 #collision detection for the number five
                 coli_5=level_one.num_obj.collision_detection_numbers(5,level_one.num_obj.pet,level_one.main_character.character,level_one.num_obj.pet_pos.x , level_one.num_obj.pet_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.pet_mask , level_one.main_character.character_mask,numbers_chosen)  
@@ -591,7 +552,7 @@ def main():
                    num5 = goalfont.render("5", 1, (0,0,0))
                    level_one.num_obj.five_c=True
                 if(level_one.num_obj.five_c==True):
-                   screen.blit(num5,(637,10)) 
+                   screen.blit(num5,(207,60)) 
 
                 #collision detection for the number six
                 coli_6=level_one.num_obj.collision_detection_numbers(6,level_one.num_obj.sest,level_one.main_character.character,level_one.num_obj.sest_pos.x , level_one.num_obj.sest_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.sest_mask , level_one.main_character.character_mask,numbers_chosen)
@@ -599,7 +560,7 @@ def main():
                    num6 = goalfont.render("6", 1, (0,0,0))
                    level_one.num_obj.six_c=True
                 if(level_one.num_obj.six_c==True):
-                   screen.blit(num6,(664,10))
+                   screen.blit(num6,(234,60))
 
                 #collision detection for the number seven
                 coli_7=level_one.num_obj.collision_detection_numbers(7,level_one.num_obj.sedum,level_one.main_character.character,level_one.num_obj.sedum_pos.x , level_one.num_obj.sedum_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.sedum_mask , level_one.main_character.character_mask,numbers_chosen)
@@ -607,25 +568,25 @@ def main():
                    num7 = goalfont.render("7", 1, (0,0,0))
                    level_one.num_obj.seven_c=True
                 if(level_one.num_obj.seven_c==True):
-                   screen.blit(num7,(690,10))
+                   screen.blit(num7,(260,60))
                 #collision detection for the number eight
                 coli_8=level_one.num_obj.collision_detection_numbers(8,level_one.num_obj.osum,level_one.main_character.character,level_one.num_obj.osum_pos.x , level_one.num_obj.osum_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.osum_mask , level_one.main_character.character_mask,numbers_chosen)
                 if coli_8==True:
                    num8 = goalfont.render("8", 1, (0,0,0))
                    level_one.num_obj.eight_c=True
                 if(level_one.num_obj.eight_c==True):
-                   screen.blit(num8,(717,10))
+                   screen.blit(num8,(287,60))
                 #collision detection for the number nine
                 coli_9=level_one.num_obj.collision_detection_numbers(9,level_one.num_obj.devet,level_one.main_character.character,level_one.num_obj.devet_pos.x , level_one.num_obj.devet_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.devet_mask , level_one.main_character.character_mask,numbers_chosen)
                 if coli_9==True:
                    num9 = goalfont.render(str(9), 1, (0,0,0))
                    level_one.num_obj.nine_c=True
                 if(level_one.num_obj.nine_c==True):
-                   screen.blit(num9,(742,10))
+                   screen.blit(num9,(312,60))
                      
-                summ=check_the_sum(numbers_chosen,the_sum3,suma)
-                screen.blit(summ,(80,500))
-                level_one.print_text_sum()
+                summ=check_the_sum(numbers_chosen,the_sum3,suma,lvl1_color)
+                screen.blit(summ,(680,500))
+                level_one.print_text_sum(lvl1_color)
                 check_sum(numbers_chosen,the_sum3,suma,level_four,level_three)
                 pygame.display.update() 
 
@@ -645,10 +606,12 @@ def main():
             
             numbers_chosen = [] 
             #OBJECT OF CLASS Level
-            the_sum4=random.randint(20,30)
-            level_one = Level(background,the_sum4,4)
-            level_one.loading_objects(15400000,23500000,31600000,12700000,10000000,28900000,20800000,26200000,18100000)
-
+            the_sum4=random.randint(30,40)
+            level_one = Level(background,the_sum4,4,lvl1_color,lvl1_color)
+            level_one.loading_objects(26200000,10000000,31600000,15400000,28900000,12700000,23500000,18100000,20800000,None,None,None,None,None,None,None,None,None)
+            level_one.star_load(star_file,300,300,300,300)
+            level_one.wheel_load(wheel_file,470,470,450, 300)
+            level_one.load_char()
             clock = pygame.time.Clock()
          
             suma = 0
@@ -657,9 +620,9 @@ def main():
                 
             
 
-                level_one.wheel_star_rotation(1.0,1.15) 
+                level_one.wheel_star_rotation(1.0,1.25) 
                 
-                level_one.star_object.image_marking()
+                level_one.star_object.image_marking(star_file,470,470,447, 302)
 
                 level_one.main_character.character_rect.topleft = (level_one.main_character.char_x,level_one.main_character.char_y)
                 #end of star changing color      
@@ -693,11 +656,13 @@ def main():
                 
 
                 screen.fill((0,0,0))   
-                level_one.blit_main()     
+                level_one.blit_main(False)     
                 screen.blit(level_one.first_wheel.rotated_wheel, level_one.first_wheel.wheel_draw_pos)
                 screen.blit(level_one.star_object.rotated_star, level_one.star_object.star_draw_pos)
                            
-                rotate=level_one.numbers_rotated(9,0.020)
+                rotate=level_one.numbers_rotated()
+		for i in range(9):
+                    level_one.num_obj.acceleration_list[i]-=0.033
                
                 
                 #wheel rotation
@@ -722,7 +687,7 @@ def main():
                    num1 = goalfont.render("1", 1, (0,0,0))
                    level_one.num_obj.one_c=True
                 if(level_one.num_obj.one_c==True):
-                   screen.blit(num1,(534,10))
+                   screen.blit(num1,(104,60))#406+128
          
                 #collision detection for the number two
                 coli_2=level_one.num_obj.collision_detection_numbers(2,level_one.num_obj.dva,level_one.main_character.character,level_one.num_obj.dva_pos.x , level_one.num_obj.dva_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.dva_mask , level_one.main_character.character_mask,numbers_chosen)
@@ -730,7 +695,7 @@ def main():
                    num2 = goalfont.render("2", 1, (0,0,0))
                    level_one.num_obj.two_c=True
                 if(level_one.num_obj.two_c==True):
-                   screen.blit(num2,(558,10))
+                   screen.blit(num2,(128,60))
                    
                 #collision detection for the number three
                 coli_3=level_one.num_obj.collision_detection_numbers(3,level_one.num_obj.tri,level_one.main_character.character,level_one.num_obj.tri_pos.x , level_one.num_obj.tri_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.tri_mask , level_one.main_character.character_mask,numbers_chosen)   
@@ -738,7 +703,7 @@ def main():
                    num3 = goalfont.render("3", 1, (0,0,0))
                    level_one.num_obj.three_c=True
                 if(level_one.num_obj.three_c==True):
-                   screen.blit(num3,(583,10))
+                   screen.blit(num3,(153,60))
 
                 #collision detection for the number four
                 coli_4=level_one.num_obj.collision_detection_numbers(4,level_one.num_obj.cetiri,level_one.main_character.character,level_one.num_obj.cetiri_pos.x , level_one.num_obj.cetiri_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.cetiri_mask , level_one.main_character.character_mask,numbers_chosen)
@@ -746,7 +711,7 @@ def main():
                    num4 = goalfont.render("4", 1, (0,0,0))
                    level_one.num_obj.four_c=True
                 if(level_one.num_obj.four_c==True):
-                   screen.blit(num4,(608,10))
+                   screen.blit(num4,(178,60))
                  
                 #collision detection for the number five
                 coli_5=level_one.num_obj.collision_detection_numbers(5,level_one.num_obj.pet,level_one.main_character.character,level_one.num_obj.pet_pos.x , level_one.num_obj.pet_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.pet_mask , level_one.main_character.character_mask,numbers_chosen)  
@@ -754,7 +719,7 @@ def main():
                    num5 = goalfont.render("5", 1, (0,0,0))
                    level_one.num_obj.five_c=True
                 if(level_one.num_obj.five_c==True):
-                   screen.blit(num5,(637,10)) 
+                   screen.blit(num5,(207,60)) 
 
                 #collision detection for the number six
                 coli_6=level_one.num_obj.collision_detection_numbers(6,level_one.num_obj.sest,level_one.main_character.character,level_one.num_obj.sest_pos.x , level_one.num_obj.sest_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.sest_mask , level_one.main_character.character_mask,numbers_chosen)
@@ -762,7 +727,7 @@ def main():
                    num6 = goalfont.render("6", 1, (0,0,0))
                    level_one.num_obj.six_c=True
                 if(level_one.num_obj.six_c==True):
-                   screen.blit(num6,(664,10))
+                   screen.blit(num6,(234,60))
 
                 #collision detection for the number seven
                 coli_7=level_one.num_obj.collision_detection_numbers(7,level_one.num_obj.sedum,level_one.main_character.character,level_one.num_obj.sedum_pos.x , level_one.num_obj.sedum_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.sedum_mask , level_one.main_character.character_mask,numbers_chosen)
@@ -770,25 +735,25 @@ def main():
                    num7 = goalfont.render("7", 1, (0,0,0))
                    level_one.num_obj.seven_c=True
                 if(level_one.num_obj.seven_c==True):
-                   screen.blit(num7,(690,10))
+                   screen.blit(num7,(260,60))
                 #collision detection for the number eight
                 coli_8=level_one.num_obj.collision_detection_numbers(8,level_one.num_obj.osum,level_one.main_character.character,level_one.num_obj.osum_pos.x , level_one.num_obj.osum_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.osum_mask , level_one.main_character.character_mask,numbers_chosen)
                 if coli_8==True:
                    num8 = goalfont.render("8", 1, (0,0,0))
                    level_one.num_obj.eight_c=True
                 if(level_one.num_obj.eight_c==True):
-                   screen.blit(num8,(717,10))
+                   screen.blit(num8,(287,60))
                 #collision detection for the number nine
                 coli_9=level_one.num_obj.collision_detection_numbers(9,level_one.num_obj.devet,level_one.main_character.character,level_one.num_obj.devet_pos.x , level_one.num_obj.devet_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.devet_mask , level_one.main_character.character_mask,numbers_chosen)
                 if coli_9==True:
                    num9 = goalfont.render(str(9), 1, (0,0,0))
                    level_one.num_obj.nine_c=True
                 if(level_one.num_obj.nine_c==True):
-                   screen.blit(num9,(742,10))
+                   screen.blit(num9,(312,60))
                      
-                summ=check_the_sum(numbers_chosen,the_sum4,suma)
-                screen.blit(summ,(80,500))
-                level_one.print_text_sum()
+                summ=check_the_sum(numbers_chosen,the_sum4,suma,lvl1_color)
+                screen.blit(summ,(680,500))
+                level_one.print_text_sum(lvl1_color)
                 check_sum(numbers_chosen,the_sum4,suma,level_five,level_four)
                 
                 
@@ -803,10 +768,12 @@ def main():
             
             numbers_chosen = [] 
             #OBJECT OF CLASS Level
-            the_sum5=random.randint(35,40)
-            level_one = Level(background,the_sum5,5)
-            level_one.loading_objects(10000000,23500000,12700000,15400000,31600000,18100000,20800000,26200000,28900000)
-
+            the_sum5=random.randint(40,45)
+            level_one = Level(background,the_sum5,5,lvl1_color,lvl1_color)
+            level_one.loading_objects(26200000,10000000,31600000,15400000,28900000,12700000,23500000,18100000,20800000,None,None,None,None,None,None,None,None,None)
+            level_one.star_load(star_file,300,300,300,300)
+            level_one.wheel_load(wheel_file,650,650,450, 300)
+            level_one.load_char()
             clock = pygame.time.Clock()
          
             suma = 0
@@ -817,7 +784,7 @@ def main():
 
                 level_one.wheel_star_rotation(1.0,1.1) 
                 
-                level_one.star_object.image_marking()
+                level_one.star_object.image_marking(star_file,470,470,447, 302)
 
                 level_one.main_character.character_rect.topleft = (level_one.main_character.char_x,level_one.main_character.char_y)
                 #end of star changing color      
@@ -851,11 +818,13 @@ def main():
                 
 
                 screen.fill((0,0,0))   
-                level_one.blit_main()     
+                level_one.blit_main(False)     
                 screen.blit(level_one.first_wheel.rotated_wheel, level_one.first_wheel.wheel_draw_pos)
                 screen.blit(level_one.star_object.rotated_star, level_one.star_object.star_draw_pos)
                            
-                level_one.numbers_rotated2(9,0.033)
+                level_one.numbers_rotated()
+		for i in range(9):
+                    level_one.num_obj.acceleration_list[i]-=0.033
                
                 
                 #wheel rotation
@@ -880,7 +849,7 @@ def main():
                    num1 = goalfont.render("1", 1, (0,0,0))
                    level_one.num_obj.one_c=True
                 if(level_one.num_obj.one_c==True):
-                   screen.blit(num1,(534,10))#406+128
+                   screen.blit(num1,(104,60))#406+128
          
                 #collision detection for the number two
                 coli_2=level_one.num_obj.collision_detection_numbers(2,level_one.num_obj.dva,level_one.main_character.character,level_one.num_obj.dva_pos.x , level_one.num_obj.dva_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.dva_mask , level_one.main_character.character_mask,numbers_chosen)
@@ -888,7 +857,7 @@ def main():
                    num2 = goalfont.render("2", 1, (0,0,0))
                    level_one.num_obj.two_c=True
                 if(level_one.num_obj.two_c==True):
-                   screen.blit(num2,(558,10))
+                   screen.blit(num2,(128,60))
                    
                 #collision detection for the number three
                 coli_3=level_one.num_obj.collision_detection_numbers(3,level_one.num_obj.tri,level_one.main_character.character,level_one.num_obj.tri_pos.x , level_one.num_obj.tri_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.tri_mask , level_one.main_character.character_mask,numbers_chosen)   
@@ -896,7 +865,7 @@ def main():
                    num3 = goalfont.render("3", 1, (0,0,0))
                    level_one.num_obj.three_c=True
                 if(level_one.num_obj.three_c==True):
-                   screen.blit(num3,(583,10))
+                   screen.blit(num3,(153,60))
 
                 #collision detection for the number four
                 coli_4=level_one.num_obj.collision_detection_numbers(4,level_one.num_obj.cetiri,level_one.main_character.character,level_one.num_obj.cetiri_pos.x , level_one.num_obj.cetiri_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.cetiri_mask , level_one.main_character.character_mask,numbers_chosen)
@@ -904,7 +873,7 @@ def main():
                    num4 = goalfont.render("4", 1, (0,0,0))
                    level_one.num_obj.four_c=True
                 if(level_one.num_obj.four_c==True):
-                   screen.blit(num4,(608,10))
+                   screen.blit(num4,(178,60))
                  
                 #collision detection for the number five
                 coli_5=level_one.num_obj.collision_detection_numbers(5,level_one.num_obj.pet,level_one.main_character.character,level_one.num_obj.pet_pos.x , level_one.num_obj.pet_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.pet_mask , level_one.main_character.character_mask,numbers_chosen)  
@@ -912,7 +881,7 @@ def main():
                    num5 = goalfont.render("5", 1, (0,0,0))
                    level_one.num_obj.five_c=True
                 if(level_one.num_obj.five_c==True):
-                   screen.blit(num5,(637,10)) 
+                   screen.blit(num5,(207,60)) 
 
                 #collision detection for the number six
                 coli_6=level_one.num_obj.collision_detection_numbers(6,level_one.num_obj.sest,level_one.main_character.character,level_one.num_obj.sest_pos.x , level_one.num_obj.sest_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.sest_mask , level_one.main_character.character_mask,numbers_chosen)
@@ -920,7 +889,7 @@ def main():
                    num6 = goalfont.render("6", 1, (0,0,0))
                    level_one.num_obj.six_c=True
                 if(level_one.num_obj.six_c==True):
-                   screen.blit(num6,(664,10))
+                   screen.blit(num6,(234,60))
 
                 #collision detection for the number seven
                 coli_7=level_one.num_obj.collision_detection_numbers(7,level_one.num_obj.sedum,level_one.main_character.character,level_one.num_obj.sedum_pos.x , level_one.num_obj.sedum_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.sedum_mask , level_one.main_character.character_mask,numbers_chosen)
@@ -928,26 +897,26 @@ def main():
                    num7 = goalfont.render("7", 1, (0,0,0))
                    level_one.num_obj.seven_c=True
                 if(level_one.num_obj.seven_c==True):
-                   screen.blit(num7,(690,10))
+                   screen.blit(num7,(260,60))
                 #collision detection for the number eight
                 coli_8=level_one.num_obj.collision_detection_numbers(8,level_one.num_obj.osum,level_one.main_character.character,level_one.num_obj.osum_pos.x , level_one.num_obj.osum_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.osum_mask , level_one.main_character.character_mask,numbers_chosen)
                 if coli_8==True:
                    num8 = goalfont.render("8", 1, (0,0,0))
                    level_one.num_obj.eight_c=True
                 if(level_one.num_obj.eight_c==True):
-                   screen.blit(num8,(717,10))
+                   screen.blit(num8,(287,60))
                 #collision detection for the number nine
                 coli_9=level_one.num_obj.collision_detection_numbers(9,level_one.num_obj.devet,level_one.main_character.character,level_one.num_obj.devet_pos.x , level_one.num_obj.devet_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.devet_mask , level_one.main_character.character_mask,numbers_chosen)
                 if coli_9==True:
                    num9 = goalfont.render(str(9), 1, (0,0,0))
                    level_one.num_obj.nine_c=True
                 if(level_one.num_obj.nine_c==True):
-                   screen.blit(num9,(742,10))
+                   screen.blit(num9,(312,60))
                      
-                summ=check_the_sum(numbers_chosen,the_sum5,suma)
-                screen.blit(summ,(80,500))
-                level_one.print_text_sum()
-                check_sum(numbers_chosen,the_sum5,suma,level_five,level_five)
+                summ=check_the_sum(numbers_chosen,the_sum5,suma,lvl1_color)
+                screen.blit(summ,(680,500))
+                level_one.print_text_sum(lvl1_color)
+                check_sum(numbers_chosen,the_sum5,suma,level_six,level_five)
                 pygame.display.update() 
 
 
@@ -955,287 +924,1137 @@ def main():
 
 
 
-        level_four()
+
+
+
+
+        
+        def level_six():
+            
+            numbers_chosen = [] 
+            #OBJECT OF CLASS Level
+            the_sum6=random.randint(50,60)
+            level_one = Level(background2,the_sum6,6,lvl2_color,lvl2_color)
+            #level_one.loading_objects(0,11,3,15.7,17,19.3,23,21.5,20.5)
+	    level_one.loading_objects(0,1,2,3,4,6,5,6,0,   0.9,11.1,3.5,16.7,17.5,19.8,23.7,22,21.2)
+	    
+            level_one.star_load(star2_small,355,355,250,347)
+            level_one.star_load2(star2_big,205,250,620,250)
+            level_one.wheel_load(wheel2_file,365,365,257,360)
+            level_one.wheel_load2(wheel2_file,250,250,620,250)
+            
+            level_one.load_char()
+            clock = pygame.time.Clock()
+         
+            suma = 0
+            
+            while True:
+                
+          
+
+                level_one.wheel_star_rotation2(1.0,1.3,level_one.star_object,level_one.star_object2,level_one.first_wheel,level_one.second_wheel,1.0,1.5) 
+              
+		level_one.star_object2.image_marking(star2_small,220,250,620,250)
+                level_one.star_object.image_marking(star2_big,350,350,257,360)
+                
+
+                level_one.main_character.character_rect.topleft = (level_one.main_character.char_x,level_one.main_character.char_y)
+                #end of star changing color      
+                 
+                pressed_keys = pygame.key.get_pressed()
+
+                #setting the fps
+                time_passed = clock.tick(50)
+                time_passed_seconds = time_passed / 1000.0
+
+                # making the character move
+                
+                if pressed_keys[K_RIGHT]:
+                    level_one.main_character .char_x += level_one.main_character.char_speed * time_passed_seconds
+                if pressed_keys[K_LEFT]:
+                    level_one.main_character.char_x -= level_one.main_character.char_speed * time_passed_seconds
+                if pressed_keys[K_UP]:
+                    level_one.main_character.char_y -= level_one.main_character.char_speed * time_passed_seconds
+                if pressed_keys[K_DOWN]:
+                    level_one.main_character.char_y += level_one.main_character.char_speed * time_passed_seconds          
+                # end of the movement
+                
+               
+                # if character goes out of the screen
+                
+                level_one.main_character.char_out_of_screen()
+                
+
+
+
+                  
+                #rotating the wheel and the star
+                
+                level_one.first_wheel.rotating_wheel(level_one.first_wheel.wheel,level_one.first_wheel.wheel_rotation,level_one.first_wheel.wheel_pos.x,level_one.first_wheel.wheel_pos.y)
+                level_one.second_wheel.rotating_wheel(level_one.second_wheel.wheel,level_one.second_wheel.wheel_rotation,level_one.second_wheel.wheel_pos.x,level_one.second_wheel.wheel_pos.y)
+                level_one.star_object.rotating_star(level_one.star_object.star,level_one.star_object.star_rotation,level_one.star_object.star_pos.x,level_one.star_object.star_pos.y)
+                level_one.star_object2.rotating_star(level_one.star_object2.star,level_one.star_object2.star_rotation,level_one.star_object2.star_pos.x,level_one.star_object2.star_pos.y)
+                
+
+                screen.fill((0,0,0))   
+                level_one.blit_main(True)     
+                screen.blit(level_one.first_wheel.rotated_wheel, level_one.first_wheel.wheel_draw_pos)
+                screen.blit(level_one.second_wheel.rotated_wheel, level_one.second_wheel.wheel_draw_pos)
+
+                screen.blit(level_one.star_object.rotated_star, level_one.star_object.star_draw_pos)
+                screen.blit(level_one.star_object2.rotated_star, level_one.star_object2.star_draw_pos)
+                           
+                level_one.numbers2_rotated(level_one.num_obj,level_one.num_obj.eden,level_one.num_obj.eden_pos, level_one.num_obj.cetiri2,level_one.num_obj.cetiri2_pos,level_one.num_obj.sest,level_one.num_obj.sest_pos)
+                level_one.numbers1_rotated(level_one.num_obj,level_one.num_obj.tri,level_one.num_obj.tri_pos, level_one.num_obj.sedum,level_one.num_obj.sedum_pos,level_one.num_obj.devet,level_one.num_obj.devet_pos)
+                for i in range(9):
+                    level_one.num_obj.acceleration_list2[i]+=0.033
+		for i in range(9):
+                    level_one.num_obj.acceleration_list[i]+=0.02
+                #wheel rotation
+                level_one.first_wheel.wheel_rotation += level_one.first_wheel.wheel_rotation_direction * level_one.first_wheel.wheel_rotation_speed *time_passed_seconds
+                level_one.second_wheel.wheel_rotation += level_one.second_wheel.wheel_rotation_direction * level_one.second_wheel.wheel_rotation_speed *time_passed_seconds
+		
+
+                #star rotation
+                level_one.star_object.star_rotation += level_one.star_object.star_rotation_direction * level_one.star_object.star_rotation_speed *time_passed_seconds
+
+                level_one.star_object2.star_rotation += level_one.star_object2.star_rotation_direction * level_one.star_object2.star_rotation_speed *time_passed_seconds
+                
+                level_one.star_object.star_rect.topleft=(level_one.star_object.star_draw_pos.x,level_one.star_object.star_draw_pos.y)
+
+                level_one.star_object2.star_rect.topleft=(level_one.star_object2.star_draw_pos.x,level_one.star_object2.star_draw_pos.y)
+                
+                #creating a new mask
+                level_one.star_object.star_mask = pygame.mask.from_surface(level_one.star_object.rotated_star)
+                level_one.star_object2.star_mask = pygame.mask.from_surface(level_one.star_object2.rotated_star)
+                   
+                screen.blit(level_one.main_character.character,(level_one.main_character.char_x,level_one.main_character.char_y))
+                
+                #collision detection for the character and the star
+                collision_detection(level_one.main_character.character,level_one.star_object.star_rect.left , level_one.star_object.star_rect.top , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.star_object.star_mask , level_one.main_character.character_mask,level_six)
+
+                collision_detection(level_one.main_character.character,level_one.star_object2.star_rect.left , level_one.star_object2.star_rect.top , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.star_object2.star_mask , level_one.main_character.character_mask,level_six)
+                
+                #collision detection for the number one
+                coli_1=level_one.num_obj.collision_detection_numbers(1,level_one.num_obj.eden,level_one.main_character.character,level_one.num_obj.eden_pos.x , level_one.num_obj.eden_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.eden_mask , level_one.main_character.character_mask,numbers_chosen)
+                        
+                if coli_1==True:
+                   num1 = goalfont.render("1", 1, (0,0,0))
+                   level_one.num_obj.one_c=True
+                if(level_one.num_obj.one_c==True):
+                   screen.blit(num1,(104,60))#406+128
+           
+                #collision detection for the number two2
+                coli_2=level_one.num_obj.collision_detection_numbers(2,level_one.num_obj.dva,level_one.main_character.character,level_one.num_obj.dva_pos.x , level_one.num_obj.dva_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.dva_mask , level_one.main_character.character_mask,numbers_chosen)
+                
+                if coli_2==True:
+                   num2 = goalfont.render("2", 1, (0,0,0))
+                   level_one.num_obj.two_c=True
+                if(level_one.num_obj.two_c==True):
+                   screen.blit(num2,(128,60))
+		#collision detection for the number two2
+		coli2_2=level_one.num_obj.collision_detection_numbers(12,level_one.num_obj.dva2,level_one.main_character.character,level_one.num_obj.dva2_pos.x , level_one.num_obj.dva2_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.dva2_mask , level_one.main_character.character_mask,numbers_chosen)
+                
+                if coli2_2==True:
+                   num22 = goalfont.render("12", 1, (0,0,0))
+                   level_one.num_obj.two2_c=True
+                if(level_one.num_obj.two2_c==True):
+                   screen.blit(num22,(377,60))
+                   
+                #collision detection for the number three
+                coli_3=level_one.num_obj.collision_detection_numbers(3,level_one.num_obj.tri,level_one.main_character.character,level_one.num_obj.tri_pos.x , level_one.num_obj.tri_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.tri_mask , level_one.main_character.character_mask,numbers_chosen)   
+                if coli_3==True:
+                   num3 = goalfont.render("3", 1, (0,0,0))
+                   level_one.num_obj.three_c=True
+                if(level_one.num_obj.three_c==True):
+                   screen.blit(num3,(153,60))
+
+                #collision detection for the number four
+                coli_4=level_one.num_obj.collision_detection_numbers(4,level_one.num_obj.cetiri,level_one.main_character.character,level_one.num_obj.cetiri_pos.x , level_one.num_obj.cetiri_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.cetiri_mask , level_one.main_character.character_mask,numbers_chosen)
+                if coli_4==True:
+                   num4 = goalfont.render("4", 1, (0,0,0))
+                   level_one.num_obj.four_c=True
+                if(level_one.num_obj.four_c==True):
+                   screen.blit(num4,(178,60))
+		#collision detection for the number four2
+                coli2_4=level_one.num_obj.collision_detection_numbers(14,level_one.num_obj.cetiri2,level_one.main_character.character,level_one.num_obj.cetiri2_pos.x , level_one.num_obj.cetiri2_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.cetiri2_mask , level_one.main_character.character_mask,numbers_chosen)
+                if coli2_4==True:
+                   num42 = goalfont.render("14", 1, (0,0,0))
+                   level_one.num_obj.four2_c=True
+                if(level_one.num_obj.four2_c==True):
+                   screen.blit(num42,(455,60))
+                 
+                #collision detection for the number five
+                coli_5=level_one.num_obj.collision_detection_numbers(5,level_one.num_obj.pet,level_one.main_character.character,level_one.num_obj.pet_pos.x , level_one.num_obj.pet_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.pet_mask , level_one.main_character.character_mask,numbers_chosen)  
+                if coli_5==True:
+                   num5 = goalfont.render("5", 1, (0,0,0))
+                   level_one.num_obj.five_c=True
+                if(level_one.num_obj.five_c==True):
+                   screen.blit(num5,(207,60)) 
+
+                #collision detection for the number six
+                coli_6=level_one.num_obj.collision_detection_numbers(6,level_one.num_obj.sest,level_one.main_character.character,level_one.num_obj.sest_pos.x , level_one.num_obj.sest_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.sest_mask , level_one.main_character.character_mask,numbers_chosen)
+                if coli_6==True:
+                   num6 = goalfont.render("6", 1, (0,0,0))
+                   level_one.num_obj.six_c=True
+                if(level_one.num_obj.six_c==True):
+                   screen.blit(num6,(234,60))
+
+                #collision detection for the number seven
+                coli_7=level_one.num_obj.collision_detection_numbers(7,level_one.num_obj.sedum,level_one.main_character.character,level_one.num_obj.sedum_pos.x , level_one.num_obj.sedum_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.sedum_mask , level_one.main_character.character_mask,numbers_chosen)
+                if coli_7==True:
+                   num7 = goalfont.render("7", 1, (0,0,0))
+                   level_one.num_obj.seven_c=True
+                if(level_one.num_obj.seven_c==True):
+                   screen.blit(num7,(260,60))
+                #collision detection for the number eight
+                coli_8=level_one.num_obj.collision_detection_numbers(8,level_one.num_obj.osum,level_one.main_character.character,level_one.num_obj.osum_pos.x , level_one.num_obj.osum_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.osum_mask , level_one.main_character.character_mask,numbers_chosen)
+                if coli_8==True:
+                   num8 = goalfont.render("8", 1, (0,0,0))
+                   level_one.num_obj.eight_c=True
+                if(level_one.num_obj.eight_c==True):
+                   screen.blit(num8,(287,60))
+                #collision detection for the number nine
+                coli_9=level_one.num_obj.collision_detection_numbers(9,level_one.num_obj.devet,level_one.main_character.character,level_one.num_obj.devet_pos.x , level_one.num_obj.devet_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.devet_mask , level_one.main_character.character_mask,numbers_chosen)
+                if coli_9==True:
+                   num9 = goalfont.render("9", 1, (0,0,0))
+                   level_one.num_obj.nine_c=True
+                if(level_one.num_obj.nine_c==True):
+                   screen.blit(num9,(312,60))
+
+		#collision detection for the number nine2
+                coli2_9=level_one.num_obj.collision_detection_numbers(19,level_one.num_obj.devet2,level_one.main_character.character,level_one.num_obj.devet2_pos.x , level_one.num_obj.devet2_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.devet2_mask , level_one.main_character.character_mask,numbers_chosen)
+                if coli2_9==True:
+                   num92 = goalfont.render("19", 1, (0,0,0))
+                   level_one.num_obj.nine2_c=True
+                if(level_one.num_obj.nine2_c==True):
+                   screen.blit(num92,(652,60))
+                     
+                summ=check_the_sum(numbers_chosen,the_sum6,suma,lvl2_color)
+                screen.blit(summ,(680,500))
+                level_one.print_text_sum(lvl2_color)
+                check_sum(numbers_chosen,the_sum6,suma,level_seven,level_six)
+                pygame.display.update() 
+
+	def level_seven():
+            
+            numbers_chosen = [] 
+            #OBJECT OF CLASS Level
+            the_sum6=random.randint(50,60)
+            level_one = Level(background2,the_sum6,7,lvl2_color,lvl2_color)
+            #level_one.loading_objects(0,11,3,15.7,17,19.3,23,21.5,20.5)
+	    level_one.loading_objects(0,1,2,3,4,6,5,6,0,   0.9,11.1,3.5,16.7,17.5,19.8,23.7,22,21.2)
+	    
+            level_one.star_load(star2_small,355,355,250,347)
+            level_one.star_load2(star2_big,205,250,620,250)
+            level_one.wheel_load(wheel2_file,365,365,257,360)
+            level_one.wheel_load2(wheel2_file,250,250,620,250)
+            
+            level_one.load_char()
+            clock = pygame.time.Clock()
+         
+            suma = 0
+            
+            while True:
+                
+          
+
+                level_one.wheel_star_rotation2(1.0,1.5,level_one.star_object,level_one.star_object2,level_one.first_wheel,level_one.second_wheel,1.4,1.5) 
+              
+		level_one.star_object2.image_marking(star2_small,220,250,620,250)
+                level_one.star_object.image_marking(star2_big,350,350,257,360)
+                
+
+                level_one.main_character.character_rect.topleft = (level_one.main_character.char_x,level_one.main_character.char_y)
+                #end of star changing color      
+                 
+                pressed_keys = pygame.key.get_pressed()
+
+                #setting the fps
+                time_passed = clock.tick(50)
+                time_passed_seconds = time_passed / 1000.0
+
+                # making the character move
+                
+                if pressed_keys[K_RIGHT]:
+                    level_one.main_character .char_x += level_one.main_character.char_speed * time_passed_seconds
+                if pressed_keys[K_LEFT]:
+                    level_one.main_character.char_x -= level_one.main_character.char_speed * time_passed_seconds
+                if pressed_keys[K_UP]:
+                    level_one.main_character.char_y -= level_one.main_character.char_speed * time_passed_seconds
+                if pressed_keys[K_DOWN]:
+                    level_one.main_character.char_y += level_one.main_character.char_speed * time_passed_seconds          
+                # end of the movement
+                
+               
+                # if character goes out of the screen
+                
+                level_one.main_character.char_out_of_screen()
+                
+
+
+
+                  
+                #rotating the wheel and the star
+                
+                level_one.first_wheel.rotating_wheel(level_one.first_wheel.wheel,level_one.first_wheel.wheel_rotation,level_one.first_wheel.wheel_pos.x,level_one.first_wheel.wheel_pos.y)
+                level_one.second_wheel.rotating_wheel(level_one.second_wheel.wheel,level_one.second_wheel.wheel_rotation,level_one.second_wheel.wheel_pos.x,level_one.second_wheel.wheel_pos.y)
+                level_one.star_object.rotating_star(level_one.star_object.star,level_one.star_object.star_rotation,level_one.star_object.star_pos.x,level_one.star_object.star_pos.y)
+                level_one.star_object2.rotating_star(level_one.star_object2.star,level_one.star_object2.star_rotation,level_one.star_object2.star_pos.x,level_one.star_object2.star_pos.y)
+                
+
+                screen.fill((0,0,0))   
+                level_one.blit_main(True)     
+                screen.blit(level_one.first_wheel.rotated_wheel, level_one.first_wheel.wheel_draw_pos)
+                screen.blit(level_one.second_wheel.rotated_wheel, level_one.second_wheel.wheel_draw_pos)
+
+                screen.blit(level_one.star_object.rotated_star, level_one.star_object.star_draw_pos)
+                screen.blit(level_one.star_object2.rotated_star, level_one.star_object2.star_draw_pos)
+                           
+                level_one.numbers2_rotated(level_one.num_obj,level_one.num_obj.eden,level_one.num_obj.eden_pos, level_one.num_obj.cetiri2,level_one.num_obj.cetiri2_pos,level_one.num_obj.sest,level_one.num_obj.sest_pos)
+                level_one.numbers1_rotated(level_one.num_obj,level_one.num_obj.tri2,level_one.num_obj.tri2_pos, level_one.num_obj.sedum2,level_one.num_obj.sedum2_pos,level_one.num_obj.eden2,level_one.num_obj.eden2_pos)
+                for i in range(9):
+                    level_one.num_obj.acceleration_list2[i]+=0.033
+		for i in range(9):
+                    level_one.num_obj.acceleration_list[i]+=0.02
+                #wheel rotation
+                level_one.first_wheel.wheel_rotation += level_one.first_wheel.wheel_rotation_direction * level_one.first_wheel.wheel_rotation_speed *time_passed_seconds
+                level_one.second_wheel.wheel_rotation += level_one.second_wheel.wheel_rotation_direction * level_one.second_wheel.wheel_rotation_speed *time_passed_seconds
+		
+
+                #star rotation
+                level_one.star_object.star_rotation += level_one.star_object.star_rotation_direction * level_one.star_object.star_rotation_speed *time_passed_seconds
+
+                level_one.star_object2.star_rotation += level_one.star_object2.star_rotation_direction * level_one.star_object2.star_rotation_speed *time_passed_seconds
+                
+                level_one.star_object.star_rect.topleft=(level_one.star_object.star_draw_pos.x,level_one.star_object.star_draw_pos.y)
+
+                level_one.star_object2.star_rect.topleft=(level_one.star_object2.star_draw_pos.x,level_one.star_object2.star_draw_pos.y)
+                
+                #creating a new mask
+                level_one.star_object.star_mask = pygame.mask.from_surface(level_one.star_object.rotated_star)
+                level_one.star_object2.star_mask = pygame.mask.from_surface(level_one.star_object2.rotated_star)
+                   
+                screen.blit(level_one.main_character.character,(level_one.main_character.char_x,level_one.main_character.char_y))
+                
+                #collision detection for the character and the star
+                collision_detection(level_one.main_character.character,level_one.star_object.star_rect.left , level_one.star_object.star_rect.top , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.star_object.star_mask , level_one.main_character.character_mask,level_seven)
+
+                collision_detection(level_one.main_character.character,level_one.star_object2.star_rect.left , level_one.star_object2.star_rect.top , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.star_object2.star_mask , level_one.main_character.character_mask,level_seven)
+                
+                #collision detection for the number one
+                coli_1=level_one.num_obj.collision_detection_numbers(1,level_one.num_obj.eden,level_one.main_character.character,level_one.num_obj.eden_pos.x , level_one.num_obj.eden_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.eden_mask , level_one.main_character.character_mask,numbers_chosen)
+                        
+                if coli_1==True:
+                   num1 = goalfont.render("1", 1, (0,0,0))
+                   level_one.num_obj.one_c=True
+                if(level_one.num_obj.one_c==True):
+                   screen.blit(num1,(104,60))#406+128
+
+                #collision detection for the number one2
+		coli2_1=level_one.num_obj.collision_detection_numbers(11,level_one.num_obj.eden2,level_one.main_character.character,level_one.num_obj.eden2_pos.x , level_one.num_obj.eden2_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.eden2_mask , level_one.main_character.character_mask,numbers_chosen)
+                
+                if coli2_1==True:
+                   num12 = goalfont.render("11", 1, (0,0,0))
+                   level_one.num_obj.one2_c=True
+                if(level_one.num_obj.one2_c==True):
+                   screen.blit(num12,(338,60))
+           
+                #collision detection for the number two
+                coli_2=level_one.num_obj.collision_detection_numbers(2,level_one.num_obj.dva,level_one.main_character.character,level_one.num_obj.dva_pos.x , level_one.num_obj.dva_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.dva_mask , level_one.main_character.character_mask,numbers_chosen)
+                
+                if coli_2==True:
+                   num2 = goalfont.render("2", 1, (0,0,0))
+                   level_one.num_obj.two_c=True
+                if(level_one.num_obj.two_c==True):
+                   screen.blit(num2,(128,60))
+		#collision detection for the number two2
+		coli2_2=level_one.num_obj.collision_detection_numbers(12,level_one.num_obj.dva2,level_one.main_character.character,level_one.num_obj.dva2_pos.x , level_one.num_obj.dva2_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.dva2_mask , level_one.main_character.character_mask,numbers_chosen)
+                
+                if coli2_2==True:
+                   num22 = goalfont.render("12", 1, (0,0,0))
+                   level_one.num_obj.two2_c=True
+                if(level_one.num_obj.two2_c==True):
+                   screen.blit(num22,(377,60))
+                   
+                #collision detection for the number three
+                coli_3=level_one.num_obj.collision_detection_numbers(3,level_one.num_obj.tri,level_one.main_character.character,level_one.num_obj.tri_pos.x , level_one.num_obj.tri_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.tri_mask , level_one.main_character.character_mask,numbers_chosen)   
+                if coli_3==True:
+                   num3 = goalfont.render("3", 1, (0,0,0))
+                   level_one.num_obj.three_c=True
+                if(level_one.num_obj.three_c==True):
+                   screen.blit(num3,(153,60))
+
+                #collision detection for the number three2
+                coli2_3=level_one.num_obj.collision_detection_numbers(3,level_one.num_obj.tri2,level_one.main_character.character,level_one.num_obj.tri2_pos.x , level_one.num_obj.tri2_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.tri2_mask , level_one.main_character.character_mask,numbers_chosen)   
+                if coli2_3==True:
+                   num32 = goalfont.render("13", 1, (0,0,0))
+                   level_one.num_obj.three2_c=True
+                if(level_one.num_obj.three2_c==True):
+                   screen.blit(num32,(417,60))
+
+
+                #collision detection for the number four
+                coli_4=level_one.num_obj.collision_detection_numbers(4,level_one.num_obj.cetiri,level_one.main_character.character,level_one.num_obj.cetiri_pos.x , level_one.num_obj.cetiri_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.cetiri_mask , level_one.main_character.character_mask,numbers_chosen)
+                if coli_4==True:
+                   num4 = goalfont.render("4", 1, (0,0,0))
+                   level_one.num_obj.four_c=True
+                if(level_one.num_obj.four_c==True):
+                   screen.blit(num4,(178,60))
+		#collision detection for the number four2
+                coli2_4=level_one.num_obj.collision_detection_numbers(14,level_one.num_obj.cetiri2,level_one.main_character.character,level_one.num_obj.cetiri2_pos.x , level_one.num_obj.cetiri2_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.cetiri2_mask , level_one.main_character.character_mask,numbers_chosen)
+                if coli2_4==True:
+                   num42 = goalfont.render("14", 1, (0,0,0))
+                   level_one.num_obj.four2_c=True
+                if(level_one.num_obj.four2_c==True):
+                   screen.blit(num42,(455,60))
+                 
+                #collision detection for the number five
+                coli_5=level_one.num_obj.collision_detection_numbers(5,level_one.num_obj.pet,level_one.main_character.character,level_one.num_obj.pet_pos.x , level_one.num_obj.pet_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.pet_mask , level_one.main_character.character_mask,numbers_chosen)  
+                if coli_5==True:
+                   num5 = goalfont.render("5", 1, (0,0,0))
+                   level_one.num_obj.five_c=True
+                if(level_one.num_obj.five_c==True):
+                   screen.blit(num5,(207,60)) 
+
+                #collision detection for the number six
+                coli_6=level_one.num_obj.collision_detection_numbers(6,level_one.num_obj.sest,level_one.main_character.character,level_one.num_obj.sest_pos.x , level_one.num_obj.sest_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.sest_mask , level_one.main_character.character_mask,numbers_chosen)
+                if coli_6==True:
+                   num6 = goalfont.render("6", 1, (0,0,0))
+                   level_one.num_obj.six_c=True
+                if(level_one.num_obj.six_c==True):
+                   screen.blit(num6,(234,60))
+
+                #collision detection for the number seven
+                coli_7=level_one.num_obj.collision_detection_numbers(7,level_one.num_obj.sedum,level_one.main_character.character,level_one.num_obj.sedum_pos.x , level_one.num_obj.sedum_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.sedum_mask , level_one.main_character.character_mask,numbers_chosen)
+                if coli_7==True:
+                   num7 = goalfont.render("7", 1, (0,0,0))
+                   level_one.num_obj.seven_c=True
+                if(level_one.num_obj.seven_c==True):
+                   screen.blit(num7,(260,60))
+
+                #collision detection for the number seven2
+                coli2_7=level_one.num_obj.collision_detection_numbers(19,level_one.num_obj.sedum2,level_one.main_character.character,level_one.num_obj.sedum2_pos.x , level_one.num_obj.sedum2_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.sedum2_mask , level_one.main_character.character_mask,numbers_chosen)
+                if coli2_7==True:
+                   num72 = goalfont.render("17", 1, (0,0,0))
+                   level_one.num_obj.seven2_c=True
+                if(level_one.num_obj.seven2_c==True):
+                   screen.blit(num72,(575,60))
+
+                #collision detection for the number eight
+                coli_8=level_one.num_obj.collision_detection_numbers(8,level_one.num_obj.osum,level_one.main_character.character,level_one.num_obj.osum_pos.x , level_one.num_obj.osum_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.osum_mask , level_one.main_character.character_mask,numbers_chosen)
+                if coli_8==True:
+                   num8 = goalfont.render("8", 1, (0,0,0))
+                   level_one.num_obj.eight_c=True
+                if(level_one.num_obj.eight_c==True):
+                   screen.blit(num8,(287,60))
+                #collision detection for the number nine
+                coli_9=level_one.num_obj.collision_detection_numbers(9,level_one.num_obj.devet,level_one.main_character.character,level_one.num_obj.devet_pos.x , level_one.num_obj.devet_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.devet_mask , level_one.main_character.character_mask,numbers_chosen)
+                if coli_9==True:
+                   num9 = goalfont.render("9", 1, (0,0,0))
+                   level_one.num_obj.nine_c=True
+                if(level_one.num_obj.nine_c==True):
+                   screen.blit(num9,(312,60))
+
+		#collision detection for the number nine2
+                coli2_9=level_one.num_obj.collision_detection_numbers(19,level_one.num_obj.devet2,level_one.main_character.character,level_one.num_obj.devet2_pos.x , level_one.num_obj.devet2_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.devet2_mask , level_one.main_character.character_mask,numbers_chosen)
+                if coli2_9==True:
+                   num92 = goalfont.render("19", 1, (0,0,0))
+                   level_one.num_obj.nine2_c=True
+                if(level_one.num_obj.nine2_c==True):
+                   screen.blit(num92,(652,60))
+
+                
+                     
+                summ=check_the_sum(numbers_chosen,the_sum6,suma,lvl2_color)
+                screen.blit(summ,(680,500))
+                level_one.print_text_sum(lvl2_color)
+                check_sum(numbers_chosen,the_sum6,suma,level_eight,level_seven)
+                pygame.display.update()
+
+	def level_eight():
+            
+            numbers_chosen = [] 
+            #OBJECT OF CLASS Level
+            the_sum6=random.randint(50,60)
+            level_one = Level(background2,the_sum6,8,lvl2_color,lvl2_color)
+            #level_one.loading_objects(0,11,3,15.7,17,19.3,23,21.5,20.5)
+	    level_one.loading_objects(0,1,2,3,4,6,5,6,0,   0.9,11.1,3.5,16.7,17.5,19.8,23.7,22,21.2)
+	    
+            level_one.star_load(star2_small,355,355,250,347)
+            level_one.star_load2(star2_big,205,250,620,250)
+            level_one.wheel_load(wheel2_file,365,365,257,360)
+            level_one.wheel_load2(wheel2_file,250,250,620,250)
+            
+            level_one.load_char()
+            clock = pygame.time.Clock()
+         
+            suma = 0
+            
+            while True:
+                
+          
+
+                level_one.wheel_star_rotation2(1.0,1.1,level_one.star_object,level_one.star_object2,level_one.first_wheel,level_one.second_wheel,1.0,1.5) 
+              
+		level_one.star_object2.image_marking(star2_small,220,250,620,250)
+                level_one.star_object.image_marking(star2_big,350,350,257,360)
+                
+
+                level_one.main_character.character_rect.topleft = (level_one.main_character.char_x,level_one.main_character.char_y)
+                #end of star changing color      
+                 
+                pressed_keys = pygame.key.get_pressed()
+
+                #setting the fps
+                time_passed = clock.tick(50)
+                time_passed_seconds = time_passed / 1000.0
+
+                # making the character move
+                
+                if pressed_keys[K_RIGHT]:
+                    level_one.main_character .char_x += level_one.main_character.char_speed * time_passed_seconds
+                if pressed_keys[K_LEFT]:
+                    level_one.main_character.char_x -= level_one.main_character.char_speed * time_passed_seconds
+                if pressed_keys[K_UP]:
+                    level_one.main_character.char_y -= level_one.main_character.char_speed * time_passed_seconds
+                if pressed_keys[K_DOWN]:
+                    level_one.main_character.char_y += level_one.main_character.char_speed * time_passed_seconds          
+                # end of the movement
+                
+               
+                # if character goes out of the screen
+                
+                level_one.main_character.char_out_of_screen()
+                
+
+
+
+                  
+                #rotating the wheel and the star
+                
+                level_one.first_wheel.rotating_wheel(level_one.first_wheel.wheel,level_one.first_wheel.wheel_rotation,level_one.first_wheel.wheel_pos.x,level_one.first_wheel.wheel_pos.y)
+                level_one.second_wheel.rotating_wheel(level_one.second_wheel.wheel,level_one.second_wheel.wheel_rotation,level_one.second_wheel.wheel_pos.x,level_one.second_wheel.wheel_pos.y)
+                level_one.star_object.rotating_star(level_one.star_object.star,level_one.star_object.star_rotation,level_one.star_object.star_pos.x,level_one.star_object.star_pos.y)
+                level_one.star_object2.rotating_star(level_one.star_object2.star,level_one.star_object2.star_rotation,level_one.star_object2.star_pos.x,level_one.star_object2.star_pos.y)
+                
+
+                screen.fill((0,0,0))   
+                level_one.blit_main(True)     
+                screen.blit(level_one.first_wheel.rotated_wheel, level_one.first_wheel.wheel_draw_pos)
+                screen.blit(level_one.second_wheel.rotated_wheel, level_one.second_wheel.wheel_draw_pos)
+
+                screen.blit(level_one.star_object.rotated_star, level_one.star_object.star_draw_pos)
+                screen.blit(level_one.star_object2.rotated_star, level_one.star_object2.star_draw_pos)
+                           
+                level_one.numbers2_rotated(level_one.num_obj,level_one.num_obj.sedum2,level_one.num_obj.sedum2_pos, level_one.num_obj.eden2,level_one.num_obj.eden2_pos,level_one.num_obj.eden,level_one.num_obj.eden_pos)
+                level_one.numbers1_rotated(level_one.num_obj,level_one.num_obj.tri,level_one.num_obj.tri_pos, level_one.num_obj.pet2,level_one.num_obj.pet2_pos,level_one.num_obj.devet,level_one.num_obj.devet_pos)
+                for i in range(9):
+                    level_one.num_obj.acceleration_list2[i]-=0.033
+		for i in range(9):
+                    level_one.num_obj.acceleration_list[i]+=0.043
+                #wheel rotation
+                level_one.first_wheel.wheel_rotation += level_one.first_wheel.wheel_rotation_direction * level_one.first_wheel.wheel_rotation_speed *time_passed_seconds
+                level_one.second_wheel.wheel_rotation += level_one.second_wheel.wheel_rotation_direction * level_one.second_wheel.wheel_rotation_speed *time_passed_seconds
+		
+
+                #star rotation
+                level_one.star_object.star_rotation += level_one.star_object.star_rotation_direction * level_one.star_object.star_rotation_speed *time_passed_seconds
+
+                level_one.star_object2.star_rotation += level_one.star_object2.star_rotation_direction * level_one.star_object2.star_rotation_speed *time_passed_seconds
+                
+                level_one.star_object.star_rect.topleft=(level_one.star_object.star_draw_pos.x,level_one.star_object.star_draw_pos.y)
+
+                level_one.star_object2.star_rect.topleft=(level_one.star_object2.star_draw_pos.x,level_one.star_object2.star_draw_pos.y)
+                
+                #creating a new mask
+                level_one.star_object.star_mask = pygame.mask.from_surface(level_one.star_object.rotated_star)
+                level_one.star_object2.star_mask = pygame.mask.from_surface(level_one.star_object2.rotated_star)
+                   
+                screen.blit(level_one.main_character.character,(level_one.main_character.char_x,level_one.main_character.char_y))
+                
+                #collision detection for the character and the star
+                collision_detection(level_one.main_character.character,level_one.star_object.star_rect.left , level_one.star_object.star_rect.top , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.star_object.star_mask , level_one.main_character.character_mask,level_eight)
+
+                collision_detection(level_one.main_character.character,level_one.star_object2.star_rect.left , level_one.star_object2.star_rect.top , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.star_object2.star_mask , level_one.main_character.character_mask,level_eight)
+                
+                #collision detection for the number one
+                coli_1=level_one.num_obj.collision_detection_numbers(1,level_one.num_obj.eden,level_one.main_character.character,level_one.num_obj.eden_pos.x , level_one.num_obj.eden_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.eden_mask , level_one.main_character.character_mask,numbers_chosen)
+                        
+                if coli_1==True:
+                   num1 = goalfont.render("1", 1, (0,0,0))
+                   level_one.num_obj.one_c=True
+                if(level_one.num_obj.one_c==True):
+                   screen.blit(num1,(104,60))#406+128
+
+		#collision detection for the number eleven
+                coli2_1=level_one.num_obj.collision_detection_numbers(11,level_one.num_obj.eden2,level_one.main_character.character,level_one.num_obj.eden2_pos.x , level_one.num_obj.eden2_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.eden2_mask , level_one.main_character.character_mask,numbers_chosen)
+                        
+                if coli2_1==True:
+                   num11 = goalfont.render("11", 1, (0,0,0))
+                   level_one.num_obj.one2_c=True
+                if(level_one.num_obj.one2_c==True):
+                   screen.blit(num11,(338,60))#406+128
+
+		#collision detection for the number seventheen
+		coli2_7=level_one.num_obj.collision_detection_numbers(17,level_one.num_obj.sedum2,level_one.main_character.character,level_one.num_obj.sedum2_pos.x , level_one.num_obj.sedum2_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.sedum2_mask , level_one.main_character.character_mask,numbers_chosen)
+                        
+                if coli2_7==True:
+                   num27 = goalfont.render("17", 1, (0,0,0))
+                   level_one.num_obj.seven2_c=True
+                if(level_one.num_obj.seven2_c==True):
+                   screen.blit(num27,(575,60))#406+128
+           
+                #collision detection for the number two2
+                coli_2=level_one.num_obj.collision_detection_numbers(2,level_one.num_obj.dva,level_one.main_character.character,level_one.num_obj.dva_pos.x , level_one.num_obj.dva_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.dva_mask , level_one.main_character.character_mask,numbers_chosen)
+                
+                if coli_2==True:
+                   num2 = goalfont.render("2", 1, (0,0,0))
+                   level_one.num_obj.two_c=True
+                if(level_one.num_obj.two_c==True):
+                   screen.blit(num2,(128,60))
+		#collision detection for the number two2
+		coli2_2=level_one.num_obj.collision_detection_numbers(12,level_one.num_obj.dva2,level_one.main_character.character,level_one.num_obj.dva2_pos.x , level_one.num_obj.dva2_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.dva2_mask , level_one.main_character.character_mask,numbers_chosen)
+                
+                if coli2_2==True:
+                   num22 = goalfont.render("12", 1, (0,0,0))
+                   level_one.num_obj.two2_c=True
+                if(level_one.num_obj.two2_c==True):
+                   screen.blit(num22,(377,60))
+                   
+                #collision detection for the number three
+                coli_3=level_one.num_obj.collision_detection_numbers(3,level_one.num_obj.tri,level_one.main_character.character,level_one.num_obj.tri_pos.x , level_one.num_obj.tri_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.tri_mask , level_one.main_character.character_mask,numbers_chosen)   
+                if coli_3==True:
+                   num3 = goalfont.render("3", 1, (0,0,0))
+                   level_one.num_obj.three_c=True
+                if(level_one.num_obj.three_c==True):
+                   screen.blit(num3,(153,60))
+
+                #collision detection for the number four
+                coli_4=level_one.num_obj.collision_detection_numbers(4,level_one.num_obj.cetiri,level_one.main_character.character,level_one.num_obj.cetiri_pos.x , level_one.num_obj.cetiri_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.cetiri_mask , level_one.main_character.character_mask,numbers_chosen)
+                if coli_4==True:
+                   num4 = goalfont.render("4", 1, (0,0,0))
+                   level_one.num_obj.four_c=True
+                if(level_one.num_obj.four_c==True):
+                   screen.blit(num4,(178,60))
+		
+                 
+                #collision detection for the number five
+                coli_5=level_one.num_obj.collision_detection_numbers(5,level_one.num_obj.pet,level_one.main_character.character,level_one.num_obj.pet_pos.x , level_one.num_obj.pet_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.pet_mask , level_one.main_character.character_mask,numbers_chosen)  
+                if coli_5==True:
+                   num5 = goalfont.render("5", 1, (0,0,0))
+                   level_one.num_obj.five_c=True
+                if(level_one.num_obj.five_c==True):
+                   screen.blit(num5,(207,60)) 
+
+		#collision detection for the number fifteen
+                coli2_5=level_one.num_obj.collision_detection_numbers(15,level_one.num_obj.pet2,level_one.main_character.character,level_one.num_obj.pet2_pos.x , level_one.num_obj.pet2_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.pet2_mask , level_one.main_character.character_mask,numbers_chosen)  
+                if coli2_5==True:
+                   num52 = goalfont.render("15", 1, (0,0,0))
+                   level_one.num_obj.five2_c=True
+                if(level_one.num_obj.five2_c==True):
+                   screen.blit(num52,(497,60))
+
+                #collision detection for the number eight
+                coli_8=level_one.num_obj.collision_detection_numbers(8,level_one.num_obj.osum,level_one.main_character.character,level_one.num_obj.osum_pos.x , level_one.num_obj.osum_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.osum_mask , level_one.main_character.character_mask,numbers_chosen)
+                if coli_8==True:
+                   num8 = goalfont.render("8", 1, (0,0,0))
+                   level_one.num_obj.eight_c=True
+                if(level_one.num_obj.eight_c==True):
+                   screen.blit(num8,(287,60))
+                #collision detection for the number nine
+                coli_9=level_one.num_obj.collision_detection_numbers(9,level_one.num_obj.devet,level_one.main_character.character,level_one.num_obj.devet_pos.x , level_one.num_obj.devet_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.devet_mask , level_one.main_character.character_mask,numbers_chosen)
+                if coli_9==True:
+                   num9 = goalfont.render("9", 1, (0,0,0))
+                   level_one.num_obj.nine_c=True
+                if(level_one.num_obj.nine_c==True):
+                   screen.blit(num9,(312,60))
+
+		#collision detection for the number nine2
+                coli2_9=level_one.num_obj.collision_detection_numbers(19,level_one.num_obj.devet2,level_one.main_character.character,level_one.num_obj.devet2_pos.x , level_one.num_obj.devet2_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.devet2_mask , level_one.main_character.character_mask,numbers_chosen)
+                if coli2_9==True:
+                   num92 = goalfont.render("19", 1, (0,0,0))
+                   level_one.num_obj.nine2_c=True
+                if(level_one.num_obj.nine2_c==True):
+                   screen.blit(num92,(652,60))
+                     
+                summ=check_the_sum(numbers_chosen,the_sum6,suma,lvl2_color)
+                screen.blit(summ,(680,500))
+                level_one.print_text_sum(lvl2_color)
+                check_sum(numbers_chosen,the_sum6,suma,level_nine,level_eight)
+                pygame.display.update()
+
+	def level_nine():
+            
+            numbers_chosen = [] 
+            #OBJECT OF CLASS Level
+            the_sum6=random.randint(50,60)
+            level_one = Level(background2,the_sum6,9,lvl2_color,lvl2_color)
+            #level_one.loading_objects(0,11,3,15.7,17,19.3,23,21.5,20.5)
+	    level_one.loading_objects(0,1,2,3,4,6,5,6,0,   0.9,11.1,3.5,16.7,17.5,19.8,23.7,22,21.2)
+	    
+            level_one.star_load(star2_small,355,355,250,347)
+            level_one.star_load2(star2_big,205,250,620,250)
+            level_one.wheel_load(wheel2_file,365,365,257,360)
+            level_one.wheel_load2(wheel2_file,250,250,620,250)
+            
+            level_one.load_char()
+            clock = pygame.time.Clock()
+         
+            suma = 0
+            
+            while True:
+                
+          
+
+                level_one.wheel_star_rotation2(1.0,1.3,level_one.star_object,level_one.star_object2,level_one.first_wheel,level_one.second_wheel,1.5,1.5) 
+              
+		level_one.star_object2.image_marking(star2_small,220,250,620,250)
+                level_one.star_object.image_marking(star2_big,350,350,257,360)
+                
+
+                level_one.main_character.character_rect.topleft = (level_one.main_character.char_x,level_one.main_character.char_y)
+                #end of star changing color      
+                 
+                pressed_keys = pygame.key.get_pressed()
+
+                #setting the fps
+                time_passed = clock.tick(50)
+                time_passed_seconds = time_passed / 1000.0
+
+                # making the character move
+                
+                if pressed_keys[K_RIGHT]:
+                    level_one.main_character .char_x += level_one.main_character.char_speed * time_passed_seconds
+                if pressed_keys[K_LEFT]:
+                    level_one.main_character.char_x -= level_one.main_character.char_speed * time_passed_seconds
+                if pressed_keys[K_UP]:
+                    level_one.main_character.char_y -= level_one.main_character.char_speed * time_passed_seconds
+                if pressed_keys[K_DOWN]:
+                    level_one.main_character.char_y += level_one.main_character.char_speed * time_passed_seconds          
+                # end of the movement
+                
+               
+                # if character goes out of the screen
+                
+                level_one.main_character.char_out_of_screen()
+                
+
+
+
+                  
+                #rotating the wheel and the star
+                
+                level_one.first_wheel.rotating_wheel(level_one.first_wheel.wheel,level_one.first_wheel.wheel_rotation,level_one.first_wheel.wheel_pos.x,level_one.first_wheel.wheel_pos.y)
+                level_one.second_wheel.rotating_wheel(level_one.second_wheel.wheel,level_one.second_wheel.wheel_rotation,level_one.second_wheel.wheel_pos.x,level_one.second_wheel.wheel_pos.y)
+                level_one.star_object.rotating_star(level_one.star_object.star,level_one.star_object.star_rotation,level_one.star_object.star_pos.x,level_one.star_object.star_pos.y)
+                level_one.star_object2.rotating_star(level_one.star_object2.star,level_one.star_object2.star_rotation,level_one.star_object2.star_pos.x,level_one.star_object2.star_pos.y)
+                
+
+                screen.fill((0,0,0))   
+                level_one.blit_main(True)     
+                screen.blit(level_one.first_wheel.rotated_wheel, level_one.first_wheel.wheel_draw_pos)
+                screen.blit(level_one.second_wheel.rotated_wheel, level_one.second_wheel.wheel_draw_pos)
+
+                screen.blit(level_one.star_object.rotated_star, level_one.star_object.star_draw_pos)
+                screen.blit(level_one.star_object2.rotated_star, level_one.star_object2.star_draw_pos)
+                           
+                level_one.numbers2_rotated(level_one.num_obj,level_one.num_obj.cetiri2,level_one.num_obj.cetiri2_pos, level_one.num_obj.tri,level_one.num_obj.tri_pos,level_one.num_obj.sest,level_one.num_obj.sest_pos)
+                level_one.numbers1_rotated(level_one.num_obj,level_one.num_obj.eden,level_one.num_obj.eden_pos, level_one.num_obj.sedum,level_one.num_obj.sedum_pos,level_one.num_obj.eden2,level_one.num_obj.eden2_pos)
+                for i in range(9):
+                    level_one.num_obj.acceleration_list2[i]+=0.036
+		for i in range(9):
+                    level_one.num_obj.acceleration_list[i]-=0.02
+                #wheel rotation
+                level_one.first_wheel.wheel_rotation += level_one.first_wheel.wheel_rotation_direction * level_one.first_wheel.wheel_rotation_speed *time_passed_seconds
+                level_one.second_wheel.wheel_rotation += level_one.second_wheel.wheel_rotation_direction * level_one.second_wheel.wheel_rotation_speed *time_passed_seconds
+		
+
+                #star rotation
+                level_one.star_object.star_rotation += level_one.star_object.star_rotation_direction * level_one.star_object.star_rotation_speed *time_passed_seconds
+
+                level_one.star_object2.star_rotation += level_one.star_object2.star_rotation_direction * level_one.star_object2.star_rotation_speed *time_passed_seconds
+                
+                level_one.star_object.star_rect.topleft=(level_one.star_object.star_draw_pos.x,level_one.star_object.star_draw_pos.y)
+
+                level_one.star_object2.star_rect.topleft=(level_one.star_object2.star_draw_pos.x,level_one.star_object2.star_draw_pos.y)
+                
+                #creating a new mask
+                level_one.star_object.star_mask = pygame.mask.from_surface(level_one.star_object.rotated_star)
+                level_one.star_object2.star_mask = pygame.mask.from_surface(level_one.star_object2.rotated_star)
+                   
+                screen.blit(level_one.main_character.character,(level_one.main_character.char_x,level_one.main_character.char_y))
+                
+                #collision detection for the character and the star
+                collision_detection(level_one.main_character.character,level_one.star_object.star_rect.left , level_one.star_object.star_rect.top , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.star_object.star_mask , level_one.main_character.character_mask,level_nine)
+
+                collision_detection(level_one.main_character.character,level_one.star_object2.star_rect.left , level_one.star_object2.star_rect.top , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.star_object2.star_mask , level_one.main_character.character_mask,level_nine)
+                
+                #collision detection for the number one
+                coli_1=level_one.num_obj.collision_detection_numbers(1,level_one.num_obj.eden,level_one.main_character.character,level_one.num_obj.eden_pos.x , level_one.num_obj.eden_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.eden_mask , level_one.main_character.character_mask,numbers_chosen)
+                        
+                if coli_1==True:
+                   num1 = goalfont.render("1", 1, (0,0,0))
+                   level_one.num_obj.one_c=True
+                if(level_one.num_obj.one_c==True):
+                   screen.blit(num1,(104,60))#406+128
+
+                #collision detection for the number one2
+		coli2_1=level_one.num_obj.collision_detection_numbers(11,level_one.num_obj.eden2,level_one.main_character.character,level_one.num_obj.eden2_pos.x , level_one.num_obj.eden2_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.eden2_mask , level_one.main_character.character_mask,numbers_chosen)
+                
+                if coli2_1==True:
+                   num12 = goalfont.render("11", 1, (0,0,0))
+                   level_one.num_obj.one2_c=True
+                if(level_one.num_obj.one2_c==True):
+                   screen.blit(num12,(338,60))
+           
+                #collision detection for the number two
+                coli_2=level_one.num_obj.collision_detection_numbers(2,level_one.num_obj.dva,level_one.main_character.character,level_one.num_obj.dva_pos.x , level_one.num_obj.dva_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.dva_mask , level_one.main_character.character_mask,numbers_chosen)
+                
+                if coli_2==True:
+                   num2 = goalfont.render("2", 1, (0,0,0))
+                   level_one.num_obj.two_c=True
+                if(level_one.num_obj.two_c==True):
+                   screen.blit(num2,(128,60))
+		#collision detection for the number two2
+		coli2_2=level_one.num_obj.collision_detection_numbers(12,level_one.num_obj.dva2,level_one.main_character.character,level_one.num_obj.dva2_pos.x , level_one.num_obj.dva2_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.dva2_mask , level_one.main_character.character_mask,numbers_chosen)
+                
+                if coli2_2==True:
+                   num22 = goalfont.render("12", 1, (0,0,0))
+                   level_one.num_obj.two2_c=True
+                if(level_one.num_obj.two2_c==True):
+                   screen.blit(num22,(377,60))
+                   
+                #collision detection for the number three
+                coli_3=level_one.num_obj.collision_detection_numbers(3,level_one.num_obj.tri,level_one.main_character.character,level_one.num_obj.tri_pos.x , level_one.num_obj.tri_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.tri_mask , level_one.main_character.character_mask,numbers_chosen)   
+                if coli_3==True:
+                   num3 = goalfont.render("3", 1, (0,0,0))
+                   level_one.num_obj.three_c=True
+                if(level_one.num_obj.three_c==True):
+                   screen.blit(num3,(153,60))
+
+                #collision detection for the number three2
+                coli2_3=level_one.num_obj.collision_detection_numbers(3,level_one.num_obj.tri2,level_one.main_character.character,level_one.num_obj.tri2_pos.x , level_one.num_obj.tri2_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.tri2_mask , level_one.main_character.character_mask,numbers_chosen)   
+                if coli2_3==True:
+                   num32 = goalfont.render("13", 1, (0,0,0))
+                   level_one.num_obj.three2_c=True
+                if(level_one.num_obj.three2_c==True):
+                   screen.blit(num32,(417,60))
+
+
+                #collision detection for the number four
+                coli_4=level_one.num_obj.collision_detection_numbers(4,level_one.num_obj.cetiri,level_one.main_character.character,level_one.num_obj.cetiri_pos.x , level_one.num_obj.cetiri_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.cetiri_mask , level_one.main_character.character_mask,numbers_chosen)
+                if coli_4==True:
+                   num4 = goalfont.render("4", 1, (0,0,0))
+                   level_one.num_obj.four_c=True
+                if(level_one.num_obj.four_c==True):
+                   screen.blit(num4,(178,60))
+		#collision detection for the number four2
+                coli2_4=level_one.num_obj.collision_detection_numbers(14,level_one.num_obj.cetiri2,level_one.main_character.character,level_one.num_obj.cetiri2_pos.x , level_one.num_obj.cetiri2_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.cetiri2_mask , level_one.main_character.character_mask,numbers_chosen)
+                if coli2_4==True:
+                   num42 = goalfont.render("14", 1, (0,0,0))
+                   level_one.num_obj.four2_c=True
+                if(level_one.num_obj.four2_c==True):
+                   screen.blit(num42,(455,60))
+                 
+                #collision detection for the number five
+                coli_5=level_one.num_obj.collision_detection_numbers(5,level_one.num_obj.pet,level_one.main_character.character,level_one.num_obj.pet_pos.x , level_one.num_obj.pet_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.pet_mask , level_one.main_character.character_mask,numbers_chosen)  
+                if coli_5==True:
+                   num5 = goalfont.render("5", 1, (0,0,0))
+                   level_one.num_obj.five_c=True
+                if(level_one.num_obj.five_c==True):
+                   screen.blit(num5,(207,60)) 
+
+                #collision detection for the number six
+                coli_6=level_one.num_obj.collision_detection_numbers(6,level_one.num_obj.sest,level_one.main_character.character,level_one.num_obj.sest_pos.x , level_one.num_obj.sest_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.sest_mask , level_one.main_character.character_mask,numbers_chosen)
+                if coli_6==True:
+                   num6 = goalfont.render("6", 1, (0,0,0))
+                   level_one.num_obj.six_c=True
+                if(level_one.num_obj.six_c==True):
+                   screen.blit(num6,(234,60))
+
+                #collision detection for the number seven
+                coli_7=level_one.num_obj.collision_detection_numbers(7,level_one.num_obj.sedum,level_one.main_character.character,level_one.num_obj.sedum_pos.x , level_one.num_obj.sedum_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.sedum_mask , level_one.main_character.character_mask,numbers_chosen)
+                if coli_7==True:
+                   num7 = goalfont.render("7", 1, (0,0,0))
+                   level_one.num_obj.seven_c=True
+                if(level_one.num_obj.seven_c==True):
+                   screen.blit(num7,(260,60))
+
+                #collision detection for the number seven2
+                coli2_7=level_one.num_obj.collision_detection_numbers(19,level_one.num_obj.sedum2,level_one.main_character.character,level_one.num_obj.sedum2_pos.x , level_one.num_obj.sedum2_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.sedum2_mask , level_one.main_character.character_mask,numbers_chosen)
+                if coli2_7==True:
+                   num72 = goalfont.render("17", 1, (0,0,0))
+                   level_one.num_obj.seven2_c=True
+                if(level_one.num_obj.seven2_c==True):
+                   screen.blit(num72,(575,60))
+
+                #collision detection for the number eight
+                coli_8=level_one.num_obj.collision_detection_numbers(8,level_one.num_obj.osum,level_one.main_character.character,level_one.num_obj.osum_pos.x , level_one.num_obj.osum_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.osum_mask , level_one.main_character.character_mask,numbers_chosen)
+                if coli_8==True:
+                   num8 = goalfont.render("8", 1, (0,0,0))
+                   level_one.num_obj.eight_c=True
+                if(level_one.num_obj.eight_c==True):
+                   screen.blit(num8,(287,60))
+                #collision detection for the number nine
+                coli_9=level_one.num_obj.collision_detection_numbers(9,level_one.num_obj.devet,level_one.main_character.character,level_one.num_obj.devet_pos.x , level_one.num_obj.devet_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.devet_mask , level_one.main_character.character_mask,numbers_chosen)
+                if coli_9==True:
+                   num9 = goalfont.render("9", 1, (0,0,0))
+                   level_one.num_obj.nine_c=True
+                if(level_one.num_obj.nine_c==True):
+                   screen.blit(num9,(312,60))
+
+		#collision detection for the number nine2
+                coli2_9=level_one.num_obj.collision_detection_numbers(19,level_one.num_obj.devet2,level_one.main_character.character,level_one.num_obj.devet2_pos.x , level_one.num_obj.devet2_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.devet2_mask , level_one.main_character.character_mask,numbers_chosen)
+                if coli2_9==True:
+                   num92 = goalfont.render("19", 1, (0,0,0))
+                   level_one.num_obj.nine2_c=True
+                if(level_one.num_obj.nine2_c==True):
+                   screen.blit(num92,(652,60))
+
+                
+                     
+                summ=check_the_sum(numbers_chosen,the_sum6,suma,lvl2_color)
+                screen.blit(summ,(680,500))
+                level_one.print_text_sum(lvl2_color)
+                check_sum(numbers_chosen,the_sum6,suma,level_nine,level_nine)
+                pygame.display.update()
+
+	
+	def level_ten():
+            lvl2_color=(95,172,93)
+            numbers_chosen = [] 
+            #OBJECT OF CLASS Level
+            the_sum6=random.randint(50,60)
+            level_one = Level(background2,the_sum6,10,lvl2_color,lvl2_color)
+            #level_one.loading_objects(0,11,3,15.7,17,19.3,23,21.5,20.5)
+	    level_one.loading_objects(0,1,2,3,4,6,5,6,0,   0.9,11.1,3.5,16.7,17.5,19.8,23.7,22,21.2)
+	    
+            level_one.star_load(star2_small,355,355,250,347)
+            level_one.star_load2(star2_big,205,250,620,250)
+            level_one.wheel_load(wheel2_file,385,385,257,360)
+            level_one.wheel_load2(wheel2_file,270,270,620,250)
+            
+            level_one.load_char()
+            clock = pygame.time.Clock()
+         
+            suma = 0
+            
+            while True:
+                
+          
+
+                level_one.wheel_star_rotation2(1.0,1.1,level_one.star_object,level_one.star_object2,level_one.first_wheel,level_one.second_wheel,1.0,1.5) 
+              
+		level_one.star_object2.image_marking(star2_small,220,250,620,250)
+                level_one.star_object.image_marking(star2_big,350,350,257,360)
+                
+
+                level_one.main_character.character_rect.topleft = (level_one.main_character.char_x,level_one.main_character.char_y)
+                #end of star changing color      
+                 
+                pressed_keys = pygame.key.get_pressed()
+
+                #setting the fps
+                time_passed = clock.tick(50)
+                time_passed_seconds = time_passed / 1000.0
+
+                # making the character move
+                
+                if pressed_keys[K_RIGHT]:
+                    level_one.main_character .char_x += level_one.main_character.char_speed * time_passed_seconds
+                if pressed_keys[K_LEFT]:
+                    level_one.main_character.char_x -= level_one.main_character.char_speed * time_passed_seconds
+                if pressed_keys[K_UP]:
+                    level_one.main_character.char_y -= level_one.main_character.char_speed * time_passed_seconds
+                if pressed_keys[K_DOWN]:
+                    level_one.main_character.char_y += level_one.main_character.char_speed * time_passed_seconds          
+                # end of the movement
+                
+               
+                # if character goes out of the screen
+                
+                level_one.main_character.char_out_of_screen()
+                
+
+
+
+                  
+                #rotating the wheel and the star
+                
+                level_one.first_wheel.rotating_wheel(level_one.first_wheel.wheel,level_one.first_wheel.wheel_rotation,level_one.first_wheel.wheel_pos.x,level_one.first_wheel.wheel_pos.y)
+                level_one.second_wheel.rotating_wheel(level_one.second_wheel.wheel,level_one.second_wheel.wheel_rotation,level_one.second_wheel.wheel_pos.x,level_one.second_wheel.wheel_pos.y)
+                level_one.star_object.rotating_star(level_one.star_object.star,level_one.star_object.star_rotation,level_one.star_object.star_pos.x,level_one.star_object.star_pos.y)
+                level_one.star_object2.rotating_star(level_one.star_object2.star,level_one.star_object2.star_rotation,level_one.star_object2.star_pos.x,level_one.star_object2.star_pos.y)
+                
+
+                screen.fill((0,0,0))   
+                level_one.blit_main(True)     
+                screen.blit(level_one.first_wheel.rotated_wheel, level_one.first_wheel.wheel_draw_pos)
+                screen.blit(level_one.second_wheel.rotated_wheel, level_one.second_wheel.wheel_draw_pos)
+
+                screen.blit(level_one.star_object.rotated_star, level_one.star_object.star_draw_pos)
+                screen.blit(level_one.star_object2.rotated_star, level_one.star_object2.star_draw_pos)
+                           
+                level_one.numbers2_rotated(level_one.num_obj,level_one.num_obj.sedum2,level_one.num_obj.sedum2_pos, level_one.num_obj.eden2,level_one.num_obj.eden2_pos,level_one.num_obj.osum2,level_one.num_obj.osum2_pos)
+                level_one.numbers1_rotated(level_one.num_obj,level_one.num_obj.sest2,level_one.num_obj.sest2_pos, level_one.num_obj.pet2,level_one.num_obj.pet2_pos,level_one.num_obj.eden,level_one.num_obj.eden_pos)
+                for i in range(9):
+                    level_one.num_obj.acceleration_list2[i]-=0.033
+		for i in range(9):
+                    level_one.num_obj.acceleration_list[i]-=0.043
+                #wheel rotation
+                level_one.first_wheel.wheel_rotation += level_one.first_wheel.wheel_rotation_direction * level_one.first_wheel.wheel_rotation_speed *time_passed_seconds
+                level_one.second_wheel.wheel_rotation += level_one.second_wheel.wheel_rotation_direction * level_one.second_wheel.wheel_rotation_speed *time_passed_seconds
+		
+
+                #star rotation
+                level_one.star_object.star_rotation += level_one.star_object.star_rotation_direction * level_one.star_object.star_rotation_speed *time_passed_seconds
+
+                level_one.star_object2.star_rotation += level_one.star_object2.star_rotation_direction * level_one.star_object2.star_rotation_speed *time_passed_seconds
+                
+                level_one.star_object.star_rect.topleft=(level_one.star_object.star_draw_pos.x,level_one.star_object.star_draw_pos.y)
+
+                level_one.star_object2.star_rect.topleft=(level_one.star_object2.star_draw_pos.x,level_one.star_object2.star_draw_pos.y)
+                
+                #creating a new mask
+                level_one.star_object.star_mask = pygame.mask.from_surface(level_one.star_object.rotated_star)
+                level_one.star_object2.star_mask = pygame.mask.from_surface(level_one.star_object2.rotated_star)
+                   
+                screen.blit(level_one.main_character.character,(level_one.main_character.char_x,level_one.main_character.char_y))
+                
+                #collision detection for the character and the star
+                collision_detection(level_one.main_character.character,level_one.star_object.star_rect.left , level_one.star_object.star_rect.top , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.star_object.star_mask , level_one.main_character.character_mask,level_ten)
+
+                collision_detection(level_one.main_character.character,level_one.star_object2.star_rect.left , level_one.star_object2.star_rect.top , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.star_object2.star_mask , level_one.main_character.character_mask,level_ten)
+                
+                #collision detection for the number one
+                coli_1=level_one.num_obj.collision_detection_numbers(1,level_one.num_obj.eden,level_one.main_character.character,level_one.num_obj.eden_pos.x , level_one.num_obj.eden_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.eden_mask , level_one.main_character.character_mask,numbers_chosen)
+                        
+                if coli_1==True:
+                   num1 = goalfont.render("1", 1, (0,0,0))
+                   level_one.num_obj.one_c=True
+                if(level_one.num_obj.one_c==True):
+                   screen.blit(num1,(104,60))#406+128
+
+		#collision detection for the number eleven
+                coli2_1=level_one.num_obj.collision_detection_numbers(11,level_one.num_obj.eden2,level_one.main_character.character,level_one.num_obj.eden2_pos.x , level_one.num_obj.eden2_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.eden2_mask , level_one.main_character.character_mask,numbers_chosen)
+                        
+                if coli2_1==True:
+                   num11 = goalfont.render("11", 1, (0,0,0))
+                   level_one.num_obj.one2_c=True
+                if(level_one.num_obj.one2_c==True):
+                   screen.blit(num11,(338,60))#406+128
+
+		#collision detection for the number seventheen
+		coli2_7=level_one.num_obj.collision_detection_numbers(17,level_one.num_obj.sedum2,level_one.main_character.character,level_one.num_obj.sedum2_pos.x , level_one.num_obj.sedum2_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.sedum2_mask , level_one.main_character.character_mask,numbers_chosen)
+                        
+                if coli2_7==True:
+                   num27 = goalfont.render("17", 1, (0,0,0))
+                   level_one.num_obj.seven2_c=True
+                if(level_one.num_obj.seven2_c==True):
+                   screen.blit(num27,(575,60))#406+128
+           
+                #collision detection for the number two2
+                coli_2=level_one.num_obj.collision_detection_numbers(2,level_one.num_obj.dva,level_one.main_character.character,level_one.num_obj.dva_pos.x , level_one.num_obj.dva_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.dva_mask , level_one.main_character.character_mask,numbers_chosen)
+                
+                if coli_2==True:
+                   num2 = goalfont.render("2", 1, (0,0,0))
+                   level_one.num_obj.two_c=True
+                if(level_one.num_obj.two_c==True):
+                   screen.blit(num2,(128,60))
+		#collision detection for the number two2
+		coli2_2=level_one.num_obj.collision_detection_numbers(12,level_one.num_obj.dva2,level_one.main_character.character,level_one.num_obj.dva2_pos.x , level_one.num_obj.dva2_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.dva2_mask , level_one.main_character.character_mask,numbers_chosen)
+                
+                if coli2_2==True:
+                   num22 = goalfont.render("12", 1, (0,0,0))
+                   level_one.num_obj.two2_c=True
+                if(level_one.num_obj.two2_c==True):
+                   screen.blit(num22,(377,60))
+                   
+                #collision detection for the number three
+                coli_3=level_one.num_obj.collision_detection_numbers(3,level_one.num_obj.tri,level_one.main_character.character,level_one.num_obj.tri_pos.x , level_one.num_obj.tri_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.tri_mask , level_one.main_character.character_mask,numbers_chosen)   
+                if coli_3==True:
+                   num3 = goalfont.render("3", 1, (0,0,0))
+                   level_one.num_obj.three_c=True
+                if(level_one.num_obj.three_c==True):
+                   screen.blit(num3,(153,60))
+
+                #collision detection for the number four
+                coli_4=level_one.num_obj.collision_detection_numbers(4,level_one.num_obj.cetiri,level_one.main_character.character,level_one.num_obj.cetiri_pos.x , level_one.num_obj.cetiri_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.cetiri_mask , level_one.main_character.character_mask,numbers_chosen)
+                if coli_4==True:
+                   num4 = goalfont.render("4", 1, (0,0,0))
+                   level_one.num_obj.four_c=True
+                if(level_one.num_obj.four_c==True):
+                   screen.blit(num4,(178,60))
+		
+                 
+                #collision detection for the number five
+                coli_5=level_one.num_obj.collision_detection_numbers(5,level_one.num_obj.pet,level_one.main_character.character,level_one.num_obj.pet_pos.x , level_one.num_obj.pet_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.pet_mask , level_one.main_character.character_mask,numbers_chosen)  
+                if coli_5==True:
+                   num5 = goalfont.render("5", 1, (0,0,0))
+                   level_one.num_obj.five_c=True
+                if(level_one.num_obj.five_c==True):
+                   screen.blit(num5,(207,60)) 
+
+		#collision detection for the number fifteen
+                coli2_5=level_one.num_obj.collision_detection_numbers(15,level_one.num_obj.pet2,level_one.main_character.character,level_one.num_obj.pet2_pos.x , level_one.num_obj.pet2_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.pet2_mask , level_one.main_character.character_mask,numbers_chosen)  
+                if coli2_5==True:
+                   num52 = goalfont.render("15", 1, (0,0,0))
+                   level_one.num_obj.five2_c=True
+                if(level_one.num_obj.five2_c==True):
+                   screen.blit(num52,(497,60))
+		#collision detection for the number six
+                coli2_6=level_one.num_obj.collision_detection_numbers(16,level_one.num_obj.sest2,level_one.main_character.character,level_one.num_obj.sest2_pos.x , level_one.num_obj.sest2_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.sest2_mask , level_one.main_character.character_mask,numbers_chosen)
+                if coli2_6==True:
+                   num62 = goalfont.render("16", 1, (0,0,0))
+                   level_one.num_obj.six2_c=True
+                if(level_one.num_obj.six2_c==True):
+                   screen.blit(num62,(536,60))
+
+                #collision detection for the number eight
+                coli_8=level_one.num_obj.collision_detection_numbers(8,level_one.num_obj.osum,level_one.main_character.character,level_one.num_obj.osum_pos.x , level_one.num_obj.osum_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.osum_mask , level_one.main_character.character_mask,numbers_chosen)
+                if coli_8==True:
+                   num8 = goalfont.render("8", 1, (0,0,0))
+                   level_one.num_obj.eight_c=True
+                if(level_one.num_obj.eight_c==True):
+                   screen.blit(num8,(287,60))
+
+		coli2_8=level_one.num_obj.collision_detection_numbers(18,level_one.num_obj.osum2,level_one.main_character.character,level_one.num_obj.osum2_pos.x , level_one.num_obj.osum2_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.osum2_mask , level_one.main_character.character_mask,numbers_chosen)
+                if coli2_8==True:
+                   num82 = goalfont.render("18", 1, (0,0,0))
+                   level_one.num_obj.eight2_c=True
+                if(level_one.num_obj.eight2_c==True):
+                   screen.blit(num82,(614,60))
+
+                #collision detection for the number nine
+                coli_9=level_one.num_obj.collision_detection_numbers(9,level_one.num_obj.devet,level_one.main_character.character,level_one.num_obj.devet_pos.x , level_one.num_obj.devet_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.devet_mask , level_one.main_character.character_mask,numbers_chosen)
+                if coli_9==True:
+                   num9 = goalfont.render("9", 1, (0,0,0))
+                   level_one.num_obj.nine_c=True
+                if(level_one.num_obj.nine_c==True):
+                   screen.blit(num9,(312,60))
+
+		#collision detection for the number nine2
+                coli2_9=level_one.num_obj.collision_detection_numbers(19,level_one.num_obj.devet2,level_one.main_character.character,level_one.num_obj.devet2_pos.x , level_one.num_obj.devet2_pos.y , level_one.main_character.character_rect.left , level_one.main_character.character_rect.top , level_one.num_obj.devet2_mask , level_one.main_character.character_mask,numbers_chosen)
+                if coli2_9==True:
+                   num92 = goalfont.render("19", 1, (0,0,0))
+                   level_one.num_obj.nine2_c=True
+                if(level_one.num_obj.nine2_c==True):
+                   screen.blit(num92,(652,60))
+                     
+                summ=check_the_sum(numbers_chosen,the_sum6,suma,lvl2_color)
+                screen.blit(summ,(680,500))
+                level_one.print_text_sum(lvl2_color)
+                check_sum(numbers_chosen,the_sum6,suma,level_ten,level_ten)
+                pygame.display.update()
+
+
+ 
+
+
+
+
+
+        level_ten()
 
 main()   
-=======
-#Loading fonts
-myfont = pygame.font.Font("resources/fonts/gentium.ttf", 40)
-goalfont = pygame.font.Font("resources/fonts/ubuntu.ttf", 30)
-
-
-#screen = pygame.display.set_mode((800,600),0,32)
-game_over = pygame.image.load(game_over_f).convert_alpha()
-go_coordinates=Vector2(200,150)
-
-def main():
- clock = pygame.time.Clock()
- pygame.mouse.set_visible(0)
-
- goal = goalfont.render("The number you need to get is: ",1,(0,0,0))
- zbiro = goalfont.render("20", 1, (0,0,0))
- num_str= goalfont.render(" 1 2 3 4 5 6 7 8 9 ", 1, (239,239,239))
-
-#making instance of class Character
- main_character = Character()
- main_character.properties()
-
-#making instance of class Wheel
- first_wheel = Wheel()
- first_wheel.wheel_properties()
-
-#making instance of class Star
- star_object = Star()
- star_object.star_properties()
-
- #making instance of class Numbers
- zero_obj = Numbers()
- dva_pos = Vector2(80,170)
- cetiri_pos = Vector2(170,100)
- devet_pos = Vector2(275, 100)   
- sest_pos = Vector2(170, 360)
- osum_pos = Vector2(285, 360)
- pet_pos = Vector2(80, 285)
- sedum_pos = Vector2(380,160)
- eden_pos = Vector2(400, 280)
- tri_pos = Vector2(400, 100)
-
- 
-
- #the sum
- zbir = 20
- zbirr = "20"
-
-#main loop
- def main_loop():
-   
-    acceleration_two = 10000000
-    acceleration_four = 12700000
-    acceleration_nine = 15400000
-    acceleration_six = 18100000
-    acceleration_eight = 20800000
-    acceleration_five = 23500000
-    acceleration_seven = 26200000
-    acceleration_one = 28900000
-    acceleration_three = 31600000
-    one_c=False
-    two_c=False
-    three_c=False
-    four_c=False
-    five_c=False
-    six_c=False
-    seven_c=False
-    eight_c=False
-    nine_c=False    
-
-    while True: 
-   
-        for event in pygame.event.get():
-            if event.type == QUIT:
-                exit()
-            
-            #rotate the wheel and the star
-            if event.type == first_wheel.wheel_rotate:  
-                first_wheel.wheel_rotation_direction=+1.0
-                star_object.star_rotation_direction=+1.0  
-            
-        
-            
-            #making the star changing color
-            if event.type == star_object.star_event:
-                star_object.star_file=star_object.star_file
-            if event.type == star_object.star2_event:
-                star_object.star_file=star_object.star2_file
-            if event.type == star_object.star3_event:
-                star_object.star_file=star_object.star3_file
-                   
-        star_object.star=pygame.image.load(star_object.star_file).convert()
-        star_object.star = pygame.transform.scale(star_object.star,(470,470))
-        star_object.star.set_colorkey((255,255,255))
-        star_object.star_mask = pygame.mask.from_surface(star_object.star)
-        star_object.star_rect = star_object.star.get_rect()
-
-        main_character.character_rect.topleft = (main_character.char_x,main_character.char_y)
-        #end of star changing color      
-         
-
-        pressed_keys = pygame.key.get_pressed()
-
-        #setting the fps
-        time_passed = clock.tick(50)
-        time_passed_seconds = time_passed / 1000.0
-
-        # making the character move
-        
-        if pressed_keys[K_RIGHT]:
-            main_character.char_x += main_character.char_speed * time_passed_seconds
-        if pressed_keys[K_LEFT]:
-            main_character.char_x -= main_character.char_speed * time_passed_seconds
-        if pressed_keys[K_UP]:
-            main_character.char_y -= main_character.char_speed * time_passed_seconds
-        if pressed_keys[K_DOWN]:
-            main_character.char_y += main_character.char_speed * time_passed_seconds          
-        # end of the movement
-        
-        # if character goes out of the screen
-                
-        if main_character.char_x >= 765:
-            main_character.char_x = 765
-        if main_character.char_x <= 0:
-            main_character.char_x = 0
-        if main_character.char_y <= 0:
-            main_character.char_y = 0
-        if main_character.char_y >= 545:
-            main_character.char_y = 545     
-
-
-           
-        
-        
-        #rotating the wheel and the star
-        first_wheel.rotating_wheel(first_wheel.wheel,first_wheel.wheel_rotation,first_wheel.wheel_pos.x,first_wheel.wheel_pos.y)
-        star_object.rotating_star(star_object.star,star_object.star_rotation,star_object.star_pos.x,star_object.star_pos.y)
-
-  
-        screen.fill((0,0,0))   
-        screen.blit(level_one.ledena_doba,(0,0))
-        screen.blit(goal,(10,10))
-        screen.blit(zbiro,(355,10))
-        screen.blit(num_str,(400,10))        
-        screen.blit(first_wheel.rotated_wheel, first_wheel.wheel_draw_pos)
-        screen.blit(star_object.rotated_star, star_object.star_draw_pos)
-        
-        #number rotation
-        dva_pos.x,dva_pos.y = num_rotation(zero_obj.dva,dva_pos.x,dva_pos.y,acceleration_two)
-        acceleration_two += 0.0320
-
-        cetiri_pos.x,cetiri_pos.y = num_rotation(zero_obj.cetiri,cetiri_pos.x,cetiri_pos.y,acceleration_four)
-        acceleration_four += 0.0320
-
-        devet_pos.x,devet_pos.y = num_rotation(zero_obj.devet,devet_pos.x,devet_pos.y,acceleration_nine)
-        acceleration_nine += 0.0320
-
-        sest_pos.x,sest_pos.y = num_rotation(zero_obj.sest,sest_pos.x,sest_pos.y,acceleration_six)
-        acceleration_six += 0.0320
-
-        osum_pos.x,osum_pos.y = num_rotation(zero_obj.osum,osum_pos.x,osum_pos.y,acceleration_eight)
-        acceleration_eight += 0.0320
-
-        pet_pos.x,pet_pos.y = num_rotation(zero_obj.pet,pet_pos.x,pet_pos.y,acceleration_five)
-        acceleration_five += 0.0320
-
-        sedum_pos.x,sedum_pos.y = num_rotation(zero_obj.sedum,sedum_pos.x,sedum_pos.y,acceleration_seven)
-        acceleration_seven += 0.0320
-
-        eden_pos.x,eden_pos.y = num_rotation(zero_obj.eden,eden_pos.x,eden_pos.y,acceleration_one)
-        acceleration_one += 0.0320
-
-        tri_pos.x,tri_pos.y = num_rotation(zero_obj.tri,tri_pos.x,tri_pos.y,acceleration_three)
-        acceleration_three += 0.0320
-        
-       
-        #wheel rotation
-        first_wheel.wheel_rotation += first_wheel.wheel_rotation_direction * first_wheel.wheel_rotation_speed *time_passed_seconds
-        #star rotation
-        star_object.star_rotation += star_object.star_rotation_direction * star_object.star_rotation_speed *time_passed_seconds
-        
-
-        star_object.star_rect.topleft=(star_object.star_draw_pos.x,star_object.star_draw_pos.y)
-        
-        #creating a new mask
-        star_object.star_mask = pygame.mask.from_surface(star_object.rotated_star)
-           
-        screen.blit(main_character.character,(main_character.char_x,main_character.char_y))
-        
-        #collision detection for the character and the star
-        #collision_detection(main_character.character,star_object.star_rect.left , star_object.star_rect.top , main_character.character_rect.left , main_character.character_rect.top , star_object.star_mask , main_character.character_mask)
-        
-        
-        #collision detection for the number one
-        coli_1=collision_detection_numbers(1,zero_obj.eden,main_character.character,eden_pos.x , eden_pos.y , main_character.character_rect.left , main_character.character_rect.top , zero_obj.eden_mask , main_character.character_mask,numbers_chosen)
-        if len(numbers_chosen)>0 and coli_1==True:
-           one=str(numbers_chosen[-1])
-           num1 = goalfont.render(one, 1, (0,0,0))
-           one_c=True
-        if(one_c==True):
-           screen.blit(num1,(406,10))
- 
-        #collision detection for the number two
-        coli_2=collision_detection_numbers(2,zero_obj.dva,main_character.character,dva_pos.x , dva_pos.y , main_character.character_rect.left , main_character.character_rect.top , zero_obj.dva_mask , main_character.character_mask,numbers_chosen)
-        if len(numbers_chosen)>0 and coli_2==True:
-           two=str(numbers_chosen[-1])
-           num2 = goalfont.render(two, 1, (0,0,0))
-           two_c=True
-        if(two_c==True):
-           screen.blit(num2,(425,10))
-           
-        #collision detection for the number three
-        coli_3=collision_detection_numbers(3,zero_obj.tri,main_character.character,tri_pos.x , tri_pos.y , main_character.character_rect.left , main_character.character_rect.top , zero_obj.tri_mask , main_character.character_mask,numbers_chosen)   
-        if len(numbers_chosen)>0 and coli_3==True:
-           three=str(numbers_chosen[-1])
-           num3 = goalfont.render(three, 1, (0,0,0))
-           three_c=True
-        if(three_c==True):
-           screen.blit(num3,(444,10))
-
-        #collision detection for the number four
-        coli_4=collision_detection_numbers(4,zero_obj.cetiri,main_character.character,cetiri_pos.x , cetiri_pos.y , main_character.character_rect.left , main_character.character_rect.top , zero_obj.cetiri_mask , main_character.character_mask,numbers_chosen)
-        if len(numbers_chosen)>0 and coli_4==True:
-           four=str(numbers_chosen[-1])
-           num4 = goalfont.render(four, 1, (0,0,0))
-           four_c=True
-        if(four_c==True):
-           screen.blit(num4,(463,10))
-         
-        #collision detection for the number five
-        coli_5=collision_detection_numbers(5,zero_obj.pet,main_character.character,pet_pos.x , pet_pos.y , main_character.character_rect.left , main_character.character_rect.top , zero_obj.pet_mask , main_character.character_mask,numbers_chosen)  
-        if len(numbers_chosen)>0 and coli_5==True:
-           five=str(numbers_chosen[-1])
-           num5 = goalfont.render(five, 1, (0,0,0))
-           five_c=True
-        if(five_c==True):
-           screen.blit(num5,(482,10)) 
-
-        #collision detection for the number six
-        coli_6=collision_detection_numbers(6,zero_obj.sest,main_character.character,sest_pos.x , sest_pos.y , main_character.character_rect.left , main_character.character_rect.top , zero_obj.sest_mask , main_character.character_mask,numbers_chosen)
-        if len(numbers_chosen)>0 and coli_6==True:
-           six=str(numbers_chosen[-1])
-           num6 = goalfont.render(six, 1, (0,0,0))
-           six_c=True
-        if(six_c==True):
-           screen.blit(num6,(501,10))
-
-        #collision detection for the number seven
-        coli_7=collision_detection_numbers(7,zero_obj.sedum,main_character.character,sedum_pos.x , sedum_pos.y , main_character.character_rect.left , main_character.character_rect.top , zero_obj.sedum_mask , main_character.character_mask,numbers_chosen)
-        if len(numbers_chosen)>0 and coli_7==True:
-           seven=str(numbers_chosen[-1])
-           num7 = goalfont.render(seven, 1, (0,0,0))
-           seven_c=True
-        if(seven_c==True):
-           screen.blit(num7,(520,10))
-        #collision detection for the number eight
-        coli_8=collision_detection_numbers(8,zero_obj.osum,main_character.character,osum_pos.x , osum_pos.y , main_character.character_rect.left , main_character.character_rect.top , zero_obj.osum_mask , main_character.character_mask,numbers_chosen)
-        if len(numbers_chosen)>0 and coli_8==True:
-           eight=str(numbers_chosen[-1])
-           num8 = goalfont.render(eight, 1, (0,0,0))
-           eight_c=True
-        if(eight_c==True):
-           screen.blit(num8,(539,10))
-        #collision detection for the number nine
-        coli_9=collision_detection_numbers(9,zero_obj.devet,main_character.character,devet_pos.x , devet_pos.y , main_character.character_rect.left , main_character.character_rect.top , zero_obj.devet_mask , main_character.character_mask,numbers_chosen)
-        if len(numbers_chosen)>0 and coli_9==True:
-           nine=str(numbers_chosen[-1])
-           num9 = goalfont.render(nine, 1, (0,0,0))
-           nine_c=True
-        if(nine_c==True):
-           screen.blit(num9,(558,10))
-     
-        
-        check_sum(numbers_chosen,zbir)
-        
-        pygame.display.update() 
-            
- main_loop()
-            
-main()    
->>>>>>> fb4e67350169539cb17f4e05d601d65908ba08f6

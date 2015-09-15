@@ -2,13 +2,9 @@ import pygame
 from gameobjects.vector2 import Vector2
 
 
-
 class Star(object):
-    def __init__(self,):
-        self.star_file="resources/star2/s2_1.png"
-        self.star2_file="resources/star2/s2_2.png"
-        self.star3_file="resources/star2/s2_3.png"
-
+    
+      
     def star_properties(self):
         
         self.star_speed = 300.
@@ -36,17 +32,15 @@ class Star(object):
         self.star_draw_pos = Vector2(obj_star_x-self.w2/2, obj_star_y-self.h2/2) 
 
 
-
-    def image_marking(self):
-        self.star=pygame.image.load(self.star_file).convert()
-        self.star = pygame.transform.scale(self.star,(470,470))
+    def image_marking(self,starf,w,h,x,y):
+        self.star=pygame.image.load(starf).convert()
+        self.star = pygame.transform.scale(self.star,(w,h))
         
         self.star.set_colorkey((255,255,255))
         
         self.star_mask = pygame.mask.from_surface(self.star)
         self.star_rect = self.star.get_rect()
-        self.star_pos = Vector2(447, 302)
-
+        self.star_pos = Vector2(x,y)
 
 
 

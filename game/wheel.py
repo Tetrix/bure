@@ -1,17 +1,18 @@
 import pygame
 from gameobjects.vector2 import Vector2
 
-wheel_file= "resources/circle.png"
+
 
 class Wheel(object):
-    def __init__(self):
+    def __init__(self,wheel_f,size_w,size_h):
         self.wheel = pygame.sprite.Sprite()
-        self.wheel=pygame.image.load(wheel_file).convert_alpha()
+        self.wheel=pygame.image.load(wheel_f).convert_alpha()
+        self.wheel = pygame.transform.scale(self.wheel,(size_w,size_h))
 
 
-    def wheel_properties(self):
+    def wheel_properties(self,x,y):
         
-        self.wheel_pos = Vector2(450, 300)
+        self.wheel_pos = Vector2(x,y)
         self.wheel_speed = 300.
         self.wheel_ue_speed=65
         self.wheel_rotation = 0.

@@ -10,7 +10,6 @@ game_over_f= 'resources/game-over.png'
 go_coordinates=Vector2(200,150)
 sumfont = pygame.font.Font("resources/fonts/goall.otf", 60)
 screen = pygame.display.set_mode((800,600),0,32)
-
 lvl_finish = pygame.image.load(lvl_finish_f).convert_alpha()
 lvl_finish = pygame.transform.scale(lvl_finish,(600,300))
 game_over = pygame.image.load(game_over_f).convert_alpha()
@@ -40,8 +39,8 @@ def check_sum(numbers_chosen,zbir,suma,level,same_level):
     
     
 
-def check_the_sum(numbers_chosen,zbir,suma):
+def check_the_sum(numbers_chosen,zbir,suma,color):
     for num in numbers_chosen:
         suma += num
-    summ = sumfont.render(str(suma),1,(0,0,0))
+    summ = sumfont.render(str(suma),1,color)
     return summ
