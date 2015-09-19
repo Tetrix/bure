@@ -43,7 +43,7 @@ class Star(object):
         pygame.time.set_timer(self.star3_event,self.star3_event_speed)
 
 
-    def star_rotate(self,obj_star,obj_star_rotation,obj_star_x,obj_star_y):
+    def rotating_star(self,obj_star,obj_star_rotation,obj_star_x,obj_star_y):
         self.rotated_star = pygame.transform.rotate(obj_star, obj_star_rotation)
         self.w2, self.h2 = self.rotated_star.get_size()
         self.star_draw_pos = Vector2(obj_star_x-self.w2/2, obj_star_y-self.h2/2) 

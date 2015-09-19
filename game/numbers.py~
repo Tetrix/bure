@@ -1,3 +1,4 @@
+from math import *
 zero = 'resources/digits/0.png'
 one = 'resources/digits/1.png'
 two = 'resources/digits/2.png'
@@ -15,6 +16,8 @@ add = 'resources/digits/plus.png'
 
 import pygame
 from gameobjects.vector2 import Vector2
+
+screen = pygame.display.set_mode((800,600),0,32)
 
 class Numbers(object):
     def __init__(self):
@@ -69,31 +72,99 @@ class Numbers(object):
         self.devet_rect = self.devet.get_rect()
         self.devet_mask = pygame.mask.from_surface(self.devet)
         
-        self.delenje = pygame.image.load(divide).convert()
-        self.delenje.set_colorkey((0,0,0))
-        self.delenje_rect = self.delenje.get_rect()
-        self.delenje_mask = pygame.mask.from_surface(self.delenje)
         
-        self.mnozenje = pygame.image.load(multiply).convert()
-        self.mnozenje.set_colorkey((0,0,0))
-        self.mnozenje_rect = self.mnozenje.get_rect()
-        self.mnozenje_mask = pygame.mask.from_surface(self.mnozenje)
         
-        self.minus = pygame.image.load(subtract).convert()
-        self.minus.set_colorkey((0,0,0))
-        self.minus_rect = self.minus.get_rect()
-        self.minus_mask = pygame.mask.from_surface(self.minus)
+            
+           
+    def num_rotation(self,obj,x,y,acc):
+        self.angle = 0.
+        self.speed = (2*3.14)/7.2
+        self.radius = 150
+        self.angle += self.speed * acc
+        self.x = cos(self.angle) * self.radius + 420
+        self.y = sin(self.angle) * self.radius + 280   
+        return self.x,self.y
         
-        self.plus = pygame.image.load(add).convert()
-        self.plus.set_colorkey((0,0,0))
-        self.plus_rect = self.plus.get_rect()
-        self.plus_mask = pygame.mask.from_surface(self.plus)
         
-        self.dva_pos = Vector2(180,170)
+    def collision_detection_numbers(self,val,obj1,obj2,object1_rect_left , object1_rect_top , object2_rect_left , object2_rect_top , object1_mask , object2_mask,numbers_chosen ):
+        self.offset_x, self.offset_y = int((object1_rect_left - object2_rect_left)), int((object1_rect_top - object2_rect_top))
+        if (object2_mask.overlap(object1_mask, (self.offset_x, self.offset_y)) != None):
+            print "COLLISION DETECTED"
+            if val not in numbers_chosen:
+                numbers_chosen.append(val)
+                obj1.set_alpha(0)        
+                return True
+            else: 
+                return False
+        else: 
+            return False
+        
+    def get_num_vector(self):
+        self.eden_pos = Vector2()
+        self.dva_pos = Vector2()
+        self.tri_pos = Vector2()
+        self.cetiri_pos = Vector2()
+        self.pet_pos = Vector2()
+        self.sest_pos = Vector2()
+        self.sedum_pos = Vector2()
+        self.osum_pos = Vector2()
+        self.devet_pos = Vector2()
+
+    def acceleration(self):
+        self.acceleration_two = 10000000
+        self.acceleration_four = 12700000
+        self.acceleration_nine = 15400000
+        self.acceleration_six = 18100000
+        self.acceleration_eight = 20800000
+        self.acceleration_five = 23500000
+        self.acceleration_seven = 26200000
+        self.acceleration_one = 28900000
+        self.acceleration_three = 31600000
+        self.acceleration_list = [self.acceleration_one , self.acceleration_two , self.acceleration_three , self.acceleration_four , self.acceleration_five , self.acceleration_six , self.acceleration_seven , self.acceleration_eight , self.acceleration_nine]
+
+
+    def collision_flag(self):
+        self.one_c=False
+        self.two_c=False
+        self.three_c=False
+        self.four_c=False
+        self.five_c=False
+        self.six_c=False
+        self.seven_c=False
+        self.eight_c=False
+        self.nine_c=False    
+
+    
+    def numbers_rotated(self,list_length,acc):
+        #number rotation
+        self.eden_pos.x,self.eden_pos.y = self.num_rotation(self.eden,self.eden_pos.x,self.eden_pos.y,self.acceleration_list[0])
+        screen.blit(self.eden,(self.eden_pos.x,self.eden_pos.y))
+        
+        self.dva_pos.x,self.dva_pos.y = self.num_rotation(self.dva,self.dva_pos.x,self.dva_pos.y,self.acceleration_list[1])
         screen.blit(self.dva,(self.dva_pos.x,self.dva_pos.y))
         
+        self.tri_pos.x,self.tri_pos.y = self.num_rotation(self.tri,self.tri_pos.x,self.tri_pos.y,self.acceleration_list[2])
+        screen.blit(self.tri,(self.tri_pos.x,self.tri_pos.y))
         
+        self.cetiri_pos.x,self.cetiri_pos.y = self.num_rotation(self.cetiri,self.cetiri_pos.x,self.cetiri_pos.y,self.acceleration_list[3])
+        screen.blit(self.cetiri,(self.cetiri_pos.x,self.cetiri_pos.y))
         
+        self.pet_pos.x,self.pet_pos.y = self.num_rotation(self.pet,self.pet_pos.x,self.pet_pos.y,self.acceleration_list[4])
+        screen.blit(self.pet,(self.pet_pos.x,self.pet_pos.y))
         
-    
+        self.sest_pos.x,self.sest_pos.y = self.num_rotation(self.sest,self.sest_pos.x,self.sest_pos.y,self.acceleration_list[5])
+        screen.blit(self.sest,(self.sest_pos.x,self.sest_pos.y))
+        
+        self.sedum_pos.x,self.sedum_pos.y = self.num_rotation(self.sedum,self.sedum_pos.x,self.sedum_pos.y,self.acceleration_list[6])
+        screen.blit(self.sedum,(self.sedum_pos.x,self.sedum_pos.y))
+        
+        self.osum_pos.x,self.osum_pos.y = self.num_rotation(self.osum,self.osum_pos.x,self.osum_pos.y,self.acceleration_list[7])
+        screen.blit(self.osum,(self.osum_pos.x,self.osum_pos.y))
+        
+        self.devet_pos.x,self.devet_pos.y = self.num_rotation(self.devet,self.devet_pos.x,self.devet_pos.y,self.acceleration_list[8])
+        screen.blit(self.devet,(self.devet_pos.x,self.devet_pos.y))
+
+        for i in range(list_length):
+           self.acceleration_list[i]+=acc
+
        
