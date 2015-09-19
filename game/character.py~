@@ -1,6 +1,13 @@
 import pygame
+<<<<<<< HEAD
 
+=======
+window_x = 270
+window_y = 80
+>>>>>>> 5d6b97837da61f53edaec9a97c81e35241793bdb
 main_char = "resources/penguin.png"
+import os
+os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (window_x,window_y)
 
 
 class Character(object):
@@ -17,10 +24,14 @@ class Character(object):
         self.char_y = 100
         self.char_speed = 170
     
+<<<<<<< HEAD
     #def properties(self):
         #self.char_x = 100
         #self.char_y = 100
         #self.char_speed = 170
+=======
+    
+>>>>>>> 5d6b97837da61f53edaec9a97c81e35241793bdb
 
         
     def char_out_of_screen(self):

@@ -5,12 +5,21 @@ from gameobjects.vector2 import Vector2
 
 pygame.init()
 
+<<<<<<< HEAD
 lvl1_finish_f = 'resources/lvl1.png'
+=======
+lvl_finish_f = 'resources/bugara.png'
+>>>>>>> 5d6b97837da61f53edaec9a97c81e35241793bdb
 game_over_f= 'resources/game-over.png'
 go_coordinates=Vector2(200,150)
 sumfont = pygame.font.Font("resources/fonts/goall.otf", 60)
 screen = pygame.display.set_mode((800,600),0,32)
+<<<<<<< HEAD
 lvl1_finish = pygame.image.load(lvl1_finish_f).convert_alpha()
+=======
+lvl_finish = pygame.image.load(lvl_finish_f).convert_alpha()
+lvl_finish = pygame.transform.scale(lvl_finish,(600,300))
+>>>>>>> 5d6b97837da61f53edaec9a97c81e35241793bdb
 game_over = pygame.image.load(game_over_f).convert_alpha()
 
 
@@ -21,7 +30,11 @@ def check_sum(numbers_chosen,zbir,suma,level,same_level):
         suma += num
     if zbir == suma:
         print "UDZU"
+<<<<<<< HEAD
         screen.blit(lvl1_finish,(200,150))
+=======
+        screen.blit(lvl_finish,(142,100))
+>>>>>>> 5d6b97837da61f53edaec9a97c81e35241793bdb
         pygame.time.set_timer(USEREVENT+6,20)
         for event in pygame.event.get():
             if event.type == USEREVENT+6:
@@ -38,8 +51,15 @@ def check_sum(numbers_chosen,zbir,suma,level,same_level):
     
     
 
+<<<<<<< HEAD
 def check_the_sum(numbers_chosen,zbir,suma):
     for num in numbers_chosen:
         suma += num
     summ = sumfont.render(str(suma),1,(0,0,0))
+=======
+def check_the_sum(numbers_chosen,zbir,suma,color):
+    for num in numbers_chosen:
+        suma += num
+    summ = sumfont.render(str(suma),1,(0,30,0))
+>>>>>>> 5d6b97837da61f53edaec9a97c81e35241793bdb
     return summ
