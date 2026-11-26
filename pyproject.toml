@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bure"
+version = "2.0.0"
+description = "An arcade math game: steer the penguin, collect numbers, hit the target sum."
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = ["pygame>=2.1"]
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[project.scripts]
+bure = "bure.__main__:main"
+
+[tool.setuptools.packages.find]
+include = ["bure*"]
+
+[tool.setuptools.package-data]
+bure = ["resources/**/*"]
